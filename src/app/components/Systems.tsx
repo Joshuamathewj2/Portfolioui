@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ExternalLink, Github, Database, Shield, Globe, Activity, Cpu, Search, Brain } from 'lucide-react';
+import { ExternalLink, Github, Database, Shield, Globe, Activity, Cpu, Search, Brain, Linkedin } from 'lucide-react';
 
 const projects = [
   {
@@ -97,11 +97,29 @@ const projects = [
     icon: Cpu,
     link: 'https://vercel.com/joshuas-projects-71456ba4/valora',
     github: 'https://github.com/Joshuamathewj2',
+    linkedin: 'https://www.linkedin.com/in/joshua-learns',
     details: [
       'High-fidelity motion system for spatial context awareness',
       'Modular dashboard architecture for real-time status monitoring',
       'Optimized asset pipeline for seamless interactive experience',
       'Integrated system-level controls for node management'
+    ]
+  },
+  {
+    id: 'musicmaster',
+    title: 'Music Master',
+    description: 'Interactive music theory and scale-learning platform designed to simplify complex musical concepts through structured visual learning systems and intuitive interface design.',
+    tags: ['React', 'JavaScript', 'Web Audio API', 'Interactive UI'],
+    category: 'MUSIC THEORY',
+    visual: 'thermal',
+    icon: Activity,
+    link: 'https://music-master-josh.vercel.app/',
+    github: 'https://github.com/Joshuamathewj2',
+    details: [
+      'Designed an interactive learning workflow for scales, notes, and advanced music theory concepts',
+      'Built modular frontend systems for dynamic note visualization and structured progression tracking',
+      'Developed responsive UI architecture optimized for interactive educational experiences',
+      'Focused on intuitive user interaction and visual clarity for complex theoretical concepts'
     ]
   },
   {
@@ -173,6 +191,17 @@ export default function Systems() {
                     <project.icon className="w-5 h-5 text-[#4F46E5]" />
                   </div>
                   <div className="flex gap-2">
+                    {project.linkedin && (
+                      <a 
+                        href={project.linkedin} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="p-2 text-[#71717A] hover:text-[#4F46E5] transition-colors group/link relative"
+                      >
+                        <Linkedin className="w-4 h-4" />
+                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[8px] font-mono rounded opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">SHOWCASE_LINK</div>
+                      </a>
+                    )}
                     <a 
                       href={project.github} 
                       target="_blank" 

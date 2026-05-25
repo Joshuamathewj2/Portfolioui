@@ -19,7 +19,7 @@ const education = [
     degree: 'Secondary School Examination (Class X)',
     school: 'DAV Boys Senior Secondary School, Gopalapuram',
     detail: 'CBSE · Academic Excellence',
-    stats: { value: '95', label: '% Percentage' }
+    stats: { value: '96', label: '% Percentage' }
   }
 ];
 
