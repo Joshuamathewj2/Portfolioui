@@ -1,7 +1,24 @@
 import { motion } from 'motion/react';
-import { ExternalLink, Github, Database, Shield, Globe, Activity, Cpu, Search, Brain, Linkedin } from 'lucide-react';
+import { ExternalLink, Github, Database, Shield, Globe, Activity, Cpu, Search, Brain, Linkedin, Eye } from 'lucide-react';
 
 const projects = [
+  {
+    id: 'silentwords',
+    title: 'SilentWords',
+    description: 'Assistive communication platform designed to translate gestures and user interaction inputs into meaningful outputs, improving accessibility and interaction for communication-focused environments.',
+    tags: ['Python', 'Computer Vision', 'AI', 'Gesture Recognition'],
+    category: 'ACCESSIBILITY AI',
+    visual: 'thermal',
+    icon: Eye,
+    link: 'https://github.com/Joshuamathewj2',
+    github: 'https://github.com/Joshuamathewj2',
+    details: [
+      'Built gesture interpretation workflows using computer vision pipelines',
+      'Designed realtime input-processing architecture for accessibility-focused interaction systems',
+      'Developed AI-assisted translation logic for converting gestures into understandable outputs',
+      'Focused on inclusive interaction design and low-latency response processing'
+    ]
+  },
   {
     id: 'debatrix',
     title: 'Debatrix',
