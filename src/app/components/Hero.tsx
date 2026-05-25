@@ -17,7 +17,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { ArrowRight, Code, Database, Brain, Globe, Shield } from 'lucide-react';
+import { ArrowRight, Code, Database, Brain, Globe, Shield, Github, Linkedin } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export default function Hero() {
@@ -72,11 +72,11 @@ export default function Hero() {
             </p>
 
             <p className="text-[#A1A1AA] text-lg max-w-2xl font-inter leading-relaxed">
-              Second-year student at <span className="text-white font-medium">LICET</span>, building production-grade applications across AI forensics, adversarial security, and scalable infrastructure.
+              Third-year student at <span className="text-white font-medium">LICET</span>, building production-grade applications across AI forensics, adversarial security, and scalable infrastructure.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap items-center gap-6">
             <button
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               className="group px-8 py-4 bg-white text-black rounded-sm font-inter text-sm font-bold flex items-center gap-3 hover:bg-[#4F46E5] hover:text-white transition-all duration-300"
@@ -85,12 +85,26 @@ export default function Hero() {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
-            <a
-              href="mailto:joshuamathewj2@gmail.com"
-              className="px-8 py-4 bg-transparent border border-[#27272A] text-[#F5F5F5] rounded-sm font-inter text-sm font-bold hover:border-[#4F46E5] transition-colors"
-            >
-              INITIALIZE SYNC
-            </a>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://github.com/Joshuamathewj2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-[#0D0D12] border border-[#27272A] text-white rounded-sm hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all duration-300 group relative"
+              >
+                <Github className="w-5 h-5" />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">GITHUB_PROFILE</div>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/joshua-learns"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-4 bg-[#0D0D12] border border-[#27272A] text-white rounded-sm hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all duration-300 group relative"
+              >
+                <Linkedin className="w-5 h-5" />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">LINKEDIN_CONNECT</div>
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pt-6 border-t border-[#27272A]/50">

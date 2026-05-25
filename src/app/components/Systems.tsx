@@ -1,7 +1,41 @@
 import { motion } from 'motion/react';
-import { ExternalLink, Github, Database, Shield, Globe, Activity, Cpu, Search } from 'lucide-react';
+import { ExternalLink, Github, Database, Shield, Globe, Activity, Cpu, Search, Brain } from 'lucide-react';
 
 const projects = [
+  {
+    id: 'debatrix',
+    title: 'Debatrix',
+    description: 'AI-assisted debate and reasoning platform designed for structured argument evaluation, evidence-backed discussion flow, and contextual response generation using retrieval-augmented pipelines.',
+    tags: ['FastAPI', 'RAG', 'Vector Retrieval', 'AI Pipelines', 'React'],
+    category: 'AI REASONING',
+    visual: 'thermal',
+    icon: Brain,
+    link: 'https://github.com/Joshuamathewj2',
+    github: 'https://github.com/Joshuamathewj2',
+    details: [
+      'Built modular RAG-based reasoning pipelines for contextual evidence retrieval',
+      'Designed structured argument orchestration system for multi-perspective debate handling',
+      'Implemented semantic retrieval workflows for evidence-backed response generation',
+      'Developed scalable backend architecture for realtime reasoning chains'
+    ]
+  },
+  {
+    id: 'mirage',
+    title: 'MIRAGE',
+    description: 'Adaptive behavioral trust-analysis platform focused on detecting suspicious interaction patterns, adversarial behavior, and digital deception through layered scoring mechanisms and behavioral anomaly analysis.',
+    tags: ['Python', 'Behavioral Analysis', 'Flask', 'Security Systems', 'Trust Scoring'],
+    category: 'ADVERSARIAL INTEL',
+    visual: 'security',
+    icon: Shield,
+    link: 'https://github.com/Joshuamathewj2',
+    github: 'https://github.com/Joshuamathewj2',
+    details: [
+      'Designed behavioral trust scoring architecture for adaptive threat evaluation',
+      'Implemented layered anomaly detection workflows using heuristic analysis pipelines',
+      'Developed modular analysis engine for adversarial interaction monitoring',
+      'Architected scalable backend logic for realtime behavioral pattern processing'
+    ]
+  },
   {
     id: 'pixeltrust',
     title: 'PixelTrust',
@@ -11,6 +45,7 @@ const projects = [
     visual: 'thermal',
     icon: Search,
     link: 'https://pixel-trust.vercel.app/',
+    github: 'https://github.com/Joshuamathewj2/PixelTrust',
     details: [
       'Decoupled React + FastAPI architecture with async request handling',
       'Pluggable trust-score pipeline with independent detection modules',
@@ -27,6 +62,7 @@ const projects = [
     visual: 'security',
     icon: Shield,
     link: 'https://github.com/Joshuamathewj2',
+    github: 'https://github.com/Joshuamathewj2',
     details: [
       'Multi-layer analysis: regex pattern matching and entropy scoring',
       'Detects encoded attacks and obfuscated cross-lingual payloads',
@@ -43,6 +79,7 @@ const projects = [
     visual: 'map',
     icon: Globe,
     link: 'https://gis-smart-evacuation-system.vercel.app/',
+    github: 'https://github.com/Joshuamathewj2',
     details: [
       'Client-side nearest-neighbor search for backend-independent operation',
       'Dynamic route rendering via Leaflet.js with live tracking',
@@ -51,26 +88,44 @@ const projects = [
     ]
   },
   {
+    id: 'valora',
+    title: 'Valora',
+    description: 'Interactive system node for spatial information management and collaborative engineering workflows.',
+    tags: ['React', 'Framer Motion', 'Tailwind'],
+    category: 'SYSTEM INTERFACE',
+    visual: 'medical',
+    icon: Cpu,
+    link: 'https://vercel.com/joshuas-projects-71456ba4/valora',
+    github: 'https://github.com/Joshuamathewj2',
+    details: [
+      'High-fidelity motion system for spatial context awareness',
+      'Modular dashboard architecture for real-time status monitoring',
+      'Optimized asset pipeline for seamless interactive experience',
+      'Integrated system-level controls for node management'
+    ]
+  },
+  {
     id: 'pillpulse',
     title: 'PillPulse',
     description: 'Medication adherence automation. Prescription OCR extraction coupled with asynchronous caregiver notification pipelines via Firebase.',
-    tags: ['React', 'Flash', 'OCR', 'n8n'],
+    tags: ['React', 'Flask', 'OCR', 'n8n'],
     category: 'HEALTHCARE AI',
     visual: 'medical',
     icon: Activity,
     link: 'https://pill-pulse-172010-rhl4.vercel.app/',
+    github: 'https://github.com/Joshuamathewj2',
     details: [
       'End-to-end workflow: OCR parsing to automated scheduling',
       'n8n orchestration with Firebase Cloud Messaging notifications',
       'Asynchronous delivery pipelines for high-reliability updates',
-      'Top 10 Finalist — CTRL+ALT+HACK 2.0 (50+ teams)'
+      'Top 10 Finalist — CTRL+ALT+HACK 2.0 (30+ Technical Events)'
     ]
   }
 ];
 
 export default function Systems() {
   return (
-    <section id="systems" className="relative py-32 px-6 overflow-hidden">
+    <section id="projects" className="relative py-32 px-6 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -82,7 +137,7 @@ export default function Systems() {
             <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
             <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Deployed // Production Systems</span>
           </div>
-          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Selected Work</h2>
+          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Projects</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -118,11 +173,23 @@ export default function Systems() {
                     <project.icon className="w-5 h-5 text-[#4F46E5]" />
                   </div>
                   <div className="flex gap-2">
-                    <a href={project.link} target="_blank" className="p-2 text-[#71717A] hover:text-white transition-colors">
+                    <a 
+                      href={project.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2 text-[#71717A] hover:text-[#4F46E5] transition-colors group/link relative"
+                    >
                       <Github className="w-4 h-4" />
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[8px] font-mono rounded opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">SOURCE_CODE</div>
                     </a>
-                    <a href={project.link} target="_blank" className="p-2 text-[#71717A] hover:text-white transition-colors">
+                    <a 
+                      href={project.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2 text-[#71717A] hover:text-[#4F46E5] transition-colors group/link relative"
+                    >
                       <ExternalLink className="w-4 h-4" />
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[8px] font-mono rounded opacity-0 group-hover/link:opacity-100 transition-opacity whitespace-nowrap">LIVE_DEPLOYMENT</div>
                     </a>
                   </div>
                 </div>

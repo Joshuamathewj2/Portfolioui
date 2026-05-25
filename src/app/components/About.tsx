@@ -26,7 +26,7 @@ export default function About() {
             className="space-y-6 text-xl text-[#A1A1AA] leading-relaxed font-inter"
           >
             <p>
-              Second-year Computer Science Engineering student at <strong className="text-white">Loyola ICAM College of Engineering and Technology</strong>, operating at the intersection of AI systems, cybersecurity, and production infrastructure.
+              Third-year Computer Science Engineering student at <strong className="text-white">Loyola ICAM College of Engineering and Technology</strong>, operating at the intersection of AI systems, cybersecurity, and production infrastructure.
             </p>
             <p>
               Specialized in end-to-end system design: building pixel-level image forensics pipelines with adversarial robustness, engineering sub-10ms prompt injection detection engines, and designing geospatial evacuation platforms optimized for degraded connectivity environments.

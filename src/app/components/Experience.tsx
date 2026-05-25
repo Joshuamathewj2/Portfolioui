@@ -8,9 +8,11 @@ const experiences = [
     role: 'Intern — IT & GIS Infrastructure',
     period: 'Head Office, Chennai',
     points: [
-      'Worked with enterprise GIS infrastructure for power distribution network management and spatial asset tracking across Tamil Nadu',
-      'Observed large-scale network architecture and data center operations supporting critical utility services at state scale',
-      'Studied IT systems management for public utilities — reliability engineering, redundancy design, operational monitoring'
+      'Industrial exposure to Data Center Operations, Network Architectures, and Enterprise Hardware systems supporting state-level utility infrastructure',
+      'Studied Web Applications and LT Billing Systems architecture for large-scale public service management',
+      'Deep dive into Geographical Information Systems (GIS) for power distribution network management and spatial asset tracking',
+      'Analysis of Sub Station Monitoring Systems and real-time reliability engineering in critical infrastructure',
+      'Observed large-scale network redundancy and redundancy design supporting critical utility services at state scale'
     ]
   }
 ];

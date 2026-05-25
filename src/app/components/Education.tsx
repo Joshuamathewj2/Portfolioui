@@ -11,9 +11,15 @@ const education = [
   },
   {
     degree: 'AISSCE (Class XII)',
-    school: 'D.A.V. Boys Senior Secondary School',
-    detail: 'Mogappair, Chennai',
+    school: 'DAV Boys Senior Secondary School, Gopalapuram',
+    detail: 'CBSE · Science Stream',
     stats: { value: '92', label: '% Percentage' }
+  },
+  {
+    degree: 'Secondary School Examination (Class X)',
+    school: 'DAV Boys Senior Secondary School, Gopalapuram',
+    detail: 'CBSE · Academic Excellence',
+    stats: { value: '95', label: '% Percentage' }
   }
 ];
 

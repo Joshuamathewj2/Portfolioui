@@ -10,10 +10,10 @@ const certifications = [
 ];
 
 const achievements = [
-  { rank: '01', title: 'Top 10 — CTRL+ALT+HACK 2.0', detail: '50+ competing teams · LICET, Chennai' },
+  { rank: '01', title: 'Top 10 — CTRL+ALT+HACK 2.0', detail: '30+ Technical Events · LICET, Chennai' },
   { rank: '02', title: 'Vice President, Literary Club', detail: 'Coordinated inter-college events · 20+ member team' },
   { rank: '03', title: 'Startup Pitch Participant', detail: 'Cambridge Entrepreneurship Bootcamp' },
-  { rank: '04', title: 'Winner — Spin a Yarn Competition', detail: 'Inter-college literary event' },
+  { rank: '04', title: '1st Place — Spin a Yarn Competition', detail: 'Inter-college literary event' },
   { rank: '05', title: '3rd Place — Channel Surfing', detail: 'Inter-college creative competition' }
 ];
 
