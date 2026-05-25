@@ -5,97 +5,65 @@ const projects = [
   {
     id: 'pixeltrust',
     title: 'PixelTrust',
-    description: 'AI-powered image authenticity verification. Detects manipulated and AI-generated images through layered frequency analysis.',
-    tags: ['FastAPI', 'Python', 'Computer Vision'],
+    description: 'AI-powered image authenticity verification. Detects manipulated and AI-generated images through layered frequency analysis and pixel-level feature extraction.',
+    tags: ['React', 'FastAPI', 'Python', 'CV'],
     category: 'AI FORENSICS',
     visual: 'thermal',
     icon: Search,
     link: 'https://pixel-trust.vercel.app/',
     details: [
-      'Metadata forgery inspection',
-      'Frequency domain decomposition',
-      'Pixel-level feature extraction',
-      'Explainable trust scores'
+      'Decoupled React + FastAPI architecture with async request handling',
+      'Pluggable trust-score pipeline with independent detection modules',
+      'Three-stage decomposition: metadata, frequency domain, and neural features',
+      'Sub-2s inference latency on production-grade imaging'
     ]
   },
   {
     id: 'thrillcircuit',
     title: 'ThrillCircuit',
-    description: 'Production-grade prompt injection detection engine. Protects LLM applications from jailbreaks and adversarial attacks.',
-    tags: ['Python', 'Flask', 'NLP'],
+    description: 'Production-grade prompt injection detection engine. Protects LLM applications from jailbreaks and adversarial attacks with sub-10ms latency.',
+    tags: ['Python', 'Flask', 'Heuristics'],
     category: 'LLM SECURITY',
     visual: 'security',
     icon: Shield,
     link: 'https://github.com/Joshuamathewj2',
     details: [
-      'Heuristic pattern matching',
-      'Sub-10ms detection latency',
-      'Multilingual rule evaluation',
-      'Stateless REST architecture'
+      'Multi-layer analysis: regex pattern matching and entropy scoring',
+      'Detects encoded attacks and obfuscated cross-lingual payloads',
+      'Stateless microservice designed for middleware integration',
+      'Optimized heuristic evaluation for high-throughput environments'
     ]
   },
   {
     id: 'gis',
     title: 'GIS Evacuation',
-    description: 'Emergency evacuation platform identifying nearest shelters using structured GeoJSON datasets in real-time.',
-    tags: ['JavaScript', 'Leaflet.js', 'GeoJSON'],
+    description: 'Emergency evacuation platform. Real-time nearest-neighbor shelter identification using structured GeoJSON datasets optimized for degraded connectivity.',
+    tags: ['JS', 'Leaflet.js', 'GeoJSON'],
     category: 'GEOSPATIAL',
     visual: 'map',
     icon: Globe,
     link: 'https://gis-smart-evacuation-system.vercel.app/',
     details: [
-      'Nearest-neighbor spatial search',
-      'Offline-capable routing engine',
-      'Dynamic path rendering',
-      'Degraded connectivity support'
+      'Client-side nearest-neighbor search for backend-independent operation',
+      'Dynamic route rendering via Leaflet.js with live tracking',
+      'Low-latency tile loading strategies for unreliable networks',
+      'Structured GeoJSON optimization for massive spatial datasets'
     ]
   },
   {
     id: 'pillpulse',
     title: 'PillPulse',
-    description: 'Medication adherence automation. Prescription OCR extraction coupled with automated caregiver notification pipelines.',
-    tags: ['React', 'Firebase', 'n8n'],
+    description: 'Medication adherence automation. Prescription OCR extraction coupled with asynchronous caregiver notification pipelines via Firebase.',
+    tags: ['React', 'Flash', 'OCR', 'n8n'],
     category: 'HEALTHCARE AI',
     visual: 'medical',
     icon: Activity,
     link: 'https://pill-pulse-172010-rhl4.vercel.app/',
     details: [
-      'Prescription OCR parser',
-      'Automated schedule orchestration',
-      'Firebase Cloud Messaging',
-      'Caregiver oversight HUD'
-    ]
-  },
-  {
-    id: 'mirage',
-    title: 'MIRAGE',
-    description: 'Adaptive cybersecurity platform using behavioral trust scoring and deception-based intelligence for threat detection.',
-    tags: ['React Native', 'Supabase', 'AI'],
-    category: 'BEHAVIORAL SEC',
-    visual: 'deception',
-    icon: Cpu,
-    link: 'https://github.com/Joshuamathewj2',
-    details: [
-      'Behavioral pattern analysis',
-      'Dynamic trust-state mutation',
-      'Honeypot channel orchestration',
-      'Real-time threat syncing'
-    ]
-  },
-  {
-    id: 'debatrix',
-    title: 'Debatrix',
-    description: 'AI-powered debate platform. RAG pipelines with structured reasoning and evidence-backed argumentation via Claude API.',
-    tags: ['Claude API', 'FastAPI', 'RAG'],
-    category: 'SYSTEMS AI',
-    visual: 'logic',
-    icon: Database,
-    link: 'https://github.com/Joshuamathewj2',
-    details: [
-      'Evidence retrieval pipelines',
-      'Structured reasoning chains',
-      'Streaming argument evaluation',
-      'Citation verification engine'
+      'End-to-end workflow: OCR parsing to automated scheduling',
+      'n8n orchestration with Firebase Cloud Messaging notifications',
+      'Asynchronous delivery pipelines for high-reliability updates',
+      'Top 10 Finalist — CTRL+ALT+HACK 2.0 (50+ teams)'
     ]
   }
 ];

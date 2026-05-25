@@ -19,10 +19,12 @@ export default function Navbar() {
   };
 
   const navItems = [
-    { id: 'hero', label: 'Initialize' },
-    { id: 'systems', label: 'Selected Work' },
-    { id: 'stack', label: 'Tech Stack' },
-    { id: 'lab', label: 'Research' },
+    { id: 'about', label: 'About' },
+    { id: 'stack', label: 'Stack' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'education', label: 'Education' },
+    { id: 'recognition', label: 'Recognition' },
     { id: 'contact', label: 'Connect' },
   ];
 

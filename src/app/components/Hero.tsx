@@ -68,21 +68,20 @@ export default function Hero() {
             </h1>
 
             <p className="text-2xl md:text-3xl text-[#F5F5F5] font-syne font-medium max-w-xl leading-tight">
-              Architect of <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">intelligent systems</span>, 
-              AI forensics, and critical infrastructure.
+              Computer Science Engineering Student <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">architecting systems</span> for the next generation of AI and security.
             </p>
 
-            <p className="text-[#A1A1AA] text-lg max-w-lg font-inter leading-relaxed">
-              Building production-grade applications across adversarial security, geospatial systems, and high-performance backend architectures.
+            <p className="text-[#A1A1AA] text-lg max-w-2xl font-inter leading-relaxed">
+              Second-year student at <span className="text-white font-medium">LICET</span>, building production-grade applications across AI forensics, adversarial security, and scalable infrastructure.
             </p>
           </div>
 
           <div className="flex flex-wrap gap-5">
             <button
-              onClick={() => document.getElementById('systems')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               className="group px-8 py-4 bg-white text-black rounded-sm font-inter text-sm font-bold flex items-center gap-3 hover:bg-[#4F46E5] hover:text-white transition-all duration-300"
             >
-              EXPLORE SYSTEMS
+              VIEW PROJECTS
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -94,12 +93,13 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-6 border-t border-[#27272A]/50">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pt-6 border-t border-[#27272A]/50">
             {[
-              { icon: Code, label: 'CORE', value: 'Backend' },
-              { icon: Database, label: 'DATABASE', value: 'Architect' },
-              { icon: Brain, label: 'AI', value: 'Forensics' },
-              { icon: Shield, label: 'SEC', value: 'Adversarial' },
+              { label: 'SYSTEMS', value: 'Backend' },
+              { label: 'AI_PIPELINES', value: 'Integration' },
+              { label: 'SEC_TOOLS', value: 'Cybersecurity' },
+              { label: 'INFRA', value: 'Scalable' },
+              { label: 'UX_ENGINE', value: 'Immersive' },
             ].map((stat, i) => (
               <motion.div 
                 key={stat.label}
@@ -108,9 +108,8 @@ export default function Hero() {
                 transition={{ delay: 0.5 + (i * 0.1) }}
                 className="space-y-1"
               >
-                <div className="text-[10px] text-[#71717A] font-mono tracking-tighter uppercase">{stat.label}</div>
-                <div className="text-xs text-white font-bold tracking-widest uppercase flex items-center gap-2">
-                  <stat.icon className="w-3 h-3 text-[#4F46E5]" />
+                <div className="text-[9px] text-[#4F46E5] font-mono tracking-tighter uppercase">{stat.label}</div>
+                <div className="text-[10px] text-white font-bold tracking-widest uppercase">
                   {stat.value}
                 </div>
               </motion.div>

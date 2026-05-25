@@ -3,40 +3,40 @@ import { Code2, Server, Layout, Brain, Cpu, Terminal, Database, Shield, Globe } 
 
 const subsystems = [
   {
-    title: 'Systems & Logic',
+    title: 'Languages',
     icon: Terminal,
     skills: ['C', 'Java', 'Python', 'JavaScript', 'TypeScript', 'SQL'],
-    description: 'Core computation & backend logic'
+    description: 'Core computation & logic'
   },
   {
-    title: 'Intelligent Systems',
-    icon: Brain,
-    skills: ['Computer Vision', 'OCR', 'RAG Systems', 'LLM Integration', 'NLP'],
-    description: 'AI & Machine Learning pipelines'
-  },
-  {
-    title: 'Geospatial Intelligence',
-    icon: Globe,
-    skills: ['Leaflet.js', 'GeoJSON', 'GIS Systems', 'Spatial Queries', 'OSM'],
-    description: 'Spatial mapping & routing engines'
-  },
-  {
-    title: 'Architecture & DevOps',
-    icon: Server,
-    skills: ['Docker', 'Firebase', 'Vercel', 'Git', 'GitHub', 'n8n'],
-    description: 'Deployment & orchestration'
-  },
-  {
-    title: 'Security & Forensics',
-    icon: Shield,
-    skills: ['Ethical Hacking', 'AI Forensics', 'Adversarial Security', 'DBMS'],
-    description: 'System integrity & adversarial defense'
-  },
-  {
-    title: 'Digital Interfaces',
+    title: 'Frontend',
     icon: Layout,
-    skills: ['React', 'Next.js', 'Tailwind', 'Framer Motion', 'HTML5/CSS3'],
-    description: 'Interactive system frontends'
+    skills: ['React', 'Next.js', 'Tailwind CSS', 'HTML5', 'CSS3'],
+    description: 'User interface systems'
+  },
+  {
+    title: 'Backend & APIs',
+    icon: Server,
+    skills: ['FastAPI', 'Flask', 'REST', 'n8n'],
+    description: 'Server-side architecture'
+  },
+  {
+    title: 'AI / ML',
+    icon: Brain,
+    skills: ['Computer Vision', 'OCR', 'RAG Systems', 'Prompt Analysis', 'LLM Integration'],
+    description: 'Intelligent processing'
+  },
+  {
+    title: 'Platforms & Tools',
+    icon: Cpu,
+    skills: ['Git', 'GitHub', 'Docker', 'Firebase', 'Vercel'],
+    description: 'Development environment'
+  },
+  {
+    title: 'Core CS',
+    icon: Database,
+    skills: ['DSA', 'OOP', 'DBMS', 'OS'],
+    description: 'Computer Science foundations'
   }
 ];
 
