@@ -1,34 +1,30 @@
 import { motion } from 'motion/react';
 import { Terminal, Activity, Award, GitBranch, Share2, Binary, Fingerprint, Telescope } from 'lucide-react';
 
-const researchHighlights = [
+const experiments = [
   {
-    title: 'Adversarial Defense Research',
-    id: 'ADV_DEF_01',
-    description: 'Investigating high-entropy pattern recognition for prompt injection mitigation in large language models.',
-    tag: 'SECURITY',
-    status: 'ONGOING'
-  },
-  {
-    title: 'Spatial Compute Engines',
-    id: 'SPAT_COMP_02',
-    description: 'Optimization of nearest-neighbor spatial queries for high-density GeoJSON environments.',
-    tag: 'GIS',
-    status: 'DORMANT'
-  },
-  {
-    title: 'Neural Vision Pipelines',
-    id: 'NEUR_VIS_03',
-    description: 'Real-time fragment decomposition for image manipulation detection in forensic workflows.',
-    tag: 'AI',
+    title: 'Procedural Shaders',
+    tag: 'VISUALS',
+    description: 'Exploration of GPU-accelerated procedural textures and fragment shader compositions for immersive interfaces.',
     status: 'ACTIVE'
   },
   {
-    title: 'Distributed Orchestration',
-    id: 'DIST_ORCH_04',
-    description: 'Event-driven medication adherence pipelines using low-code orchestration engines (n8n).',
-    tag: 'ARCH',
-    status: 'COMPLETED'
+    title: 'AI Visualization',
+    tag: 'AI',
+    description: 'Design concepts for real-time visualization of LLM inference streams and reasoning chain structures.',
+    status: 'ONGOING'
+  },
+  {
+    title: 'GIS Spatial Network',
+    tag: 'SPATIAL',
+    description: 'Experimental network analysis for routing algorithms in high-density GeoJSON environments.',
+    status: 'PROTOTYPE'
+  },
+  {
+    title: 'Architecture Motifs',
+    tag: 'SYSTEMS',
+    description: 'Study of modular interaction patterns and state orchestration in complex frontend ecosystems.',
+    status: 'RESEARCH'
   }
 ];
 
@@ -46,25 +42,24 @@ export default function Lab() {
         >
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
-            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Research // Intelligence Hub</span>
+            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Registry // Prototypes & Research</span>
           </div>
           <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">The Laboratory</h2>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[1fr_0.4fr] gap-6">
+        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6">
           
-          {/* Main Feed: Research Highlights */}
+          {/* Main Feed: Experiments */}
           <div className="grid md:grid-cols-2 gap-4">
-            {researchHighlights.map((res, i) => (
+            {experiments.map((res, i) => (
               <motion.div
-                key={res.id}
+                key={res.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 className="relative p-8 bg-[#0D0D12] border border-[#27272A]/50 rounded group hover:border-[#4F46E5]/40 transition-all duration-500"
               >
-                <div className="absolute top-4 right-4 font-mono text-[9px] text-[#71717A] tracking-widest">{res.id}</div>
                 <div className="flex items-center gap-2 mb-6 text-[#4F46E5]">
                   <Fingerprint className="w-4 h-4 opacity-50" />
                   <span className="font-mono text-[10px] tracking-widest">{res.tag}</span>
@@ -72,14 +67,14 @@ export default function Lab() {
                 <h3 className="text-xl font-syne font-bold mb-3 group-hover:text-white transition-colors">{res.title}</h3>
                 <p className="text-[#71717A] text-sm leading-relaxed mb-6">{res.description}</p>
                 <div className="flex items-center gap-2 text-[10px] font-mono">
-                  <div className={`w-1 h-1 rounded-full ${res.status === 'ACTIVE' || res.status === 'ONGOING' ? 'bg-green-500 animate-pulse' : 'bg-[#71717A]'}`} />
+                  <div className={`w-1 h-1 rounded-full ${res.status === 'ACTIVE' || res.status === 'ONGOING' ? 'bg-[#38BDF8] animate-pulse' : 'bg-[#71717A]'}`} />
                   <span className={res.status === 'ACTIVE' || res.status === 'ONGOING' ? 'text-white' : 'text-[#71717A]'}>{res.status}</span>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Side Panel: Intelligence Metrics */}
+          {/* Side Panel: Focus & Objectives */}
           <div className="space-y-4">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -88,60 +83,41 @@ export default function Lab() {
               className="p-8 bg-[#0D1117] border border-[#27272A]/50 rounded space-y-8"
             >
               <div className="flex items-center gap-2 text-[#4F46E5]">
-                <Activity className="w-4 h-4" />
-                <span className="font-mono text-xs tracking-widest uppercase">Systems Analytics</span>
+                <Telescope className="w-4 h-4" />
+                <span className="font-mono text-xs tracking-widest uppercase">Exploration Focus</span>
               </div>
 
               <div className="space-y-6">
                 {[
-                  { label: 'GITHUB_NODES', value: '450+', icon: Binary },
-                  { label: 'DEP_BRANCHES', value: '25+', icon: GitBranch },
-                  { label: 'ARCH_AWARDS', value: '08', icon: Award }
-                ].map((stat, i) => (
-                  <div key={stat.label} className="flex justify-between items-end border-b border-[#27272A] pb-4">
-                    <div className="space-y-1">
-                      <div className="text-[9px] text-[#71717A] font-mono">{stat.label}</div>
-                      <div className="text-2xl font-syne font-bold text-white tracking-widest">{stat.value}</div>
-                    </div>
-                    <stat.icon className="w-5 h-5 text-[#4F46E5] opacity-30" />
+                  { label: 'AI_SYSTEMS', value: 'Adversarial Security', detail: 'LLM Robustness Research' },
+                  { label: 'GIS_CORE', value: 'Evacuation Systems', detail: 'Spatial Network Optimization' },
+                  { label: 'INFRA', value: 'Distributed Pipelines', detail: 'Reliability Engineering' }
+                ].map((stat) => (
+                  <div key={stat.label} className="space-y-2 border-b border-[#27272A] pb-4 last:border-0">
+                    <div className="text-[9px] text-[#4F46E5] font-mono tracking-widest">{stat.label}</div>
+                    <div className="text-lg font-syne font-bold text-white uppercase">{stat.value}</div>
+                    <div className="text-[10px] text-[#71717A] font-mono">{stat.detail}</div>
                   </div>
                 ))}
               </div>
-
-              {/* Terminal Intelligence Log */}
-              <div className="bg-[#050505] p-4 rounded font-mono text-[10px] text-green-500/70 space-y-2 overflow-hidden border border-[#27272A]/50">
-                <div className="flex gap-2">
-                  <span className="text-[#4F46E5]">sys_log:</span>
-                  <span>Scanning local repositories...</span>
-                </div>
-                <div className="flex gap-2">
-                  <span className="text-[#4F46E5]">sys_log:</span>
-                  <span>Neural weights loaded [NEUR_VIS_03]</span>
-                </div>
-                <div className="flex gap-2">
-                  <span className="text-[#4F46E5]">sys_log:</span>
-                  <span>Trust score: 98.4% (Integrity verified)</span>
-                </div>
-                <motion.div 
-                  animate={{ opacity: [1, 0, 1] }} 
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                  className="w-1 h-3 bg-green-500/70" 
-                />
-              </div>
             </motion.div>
 
-            {/* Quick Actions Panel */}
+            {/* Recognition Summary */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="p-6 bg-[#0D0D12] border border-[#27272A]/50 rounded flex justify-around group"
+              className="p-8 bg-[#0D0D12] border border-[#27272A]/50 rounded space-y-4"
             >
-              <button className="p-3 hover:text-[#4F46E5] transition-colors"><Telescope className="w-5 h-5" /></button>
-              <button className="p-3 hover:text-[#4F46E5] transition-colors"><Binary className="w-5 h-5" /></button>
-              <button className="p-3 hover:text-[#4F46E5] transition-colors"><Terminal className="w-5 h-5" /></button>
-              <button className="p-3 hover:text-[#4F46E5] transition-colors"><Share2 className="w-5 h-5" /></button>
+              <div className="flex items-center gap-2 text-[#4F46E5]">
+                <Award className="w-4 h-4" />
+                <span className="font-mono text-xs tracking-widest uppercase">Recognition</span>
+              </div>
+              <div className="space-y-2">
+                <div className="text-sm font-bold text-white">Top 10 — CTRL+ALT+HACK 2.0</div>
+                <div className="text-[10px] text-[#71717A] leading-relaxed">50+ competing teams at Loyola ICAM College of Engineering.</div>
+              </div>
             </motion.div>
           </div>
 
@@ -150,4 +126,5 @@ export default function Lab() {
     </section>
   );
 }
+
 

@@ -1,48 +1,42 @@
 import { motion } from 'motion/react';
-import { Code2, Server, Layout, Brain, Cpu, Terminal, Database, Shield } from 'lucide-react';
+import { Code2, Server, Layout, Brain, Cpu, Terminal, Database, Shield, Globe } from 'lucide-react';
 
 const subsystems = [
   {
-    title: 'Core Architecture',
-    id: 'CORE_ARCH',
+    title: 'Systems & Logic',
     icon: Terminal,
-    skills: ['C', 'Java', 'Python', 'Go', 'Rust'],
-    description: 'Low-latency systems & logic'
+    skills: ['C', 'Java', 'Python', 'JavaScript', 'TypeScript', 'SQL'],
+    description: 'Core computation & backend logic'
   },
   {
-    title: 'Distributed Systems',
-    id: 'DIST_SYS',
-    icon: Server,
-    skills: ['FastAPI', 'Flask', 'REST', 'n8n', 'Node.js'],
-    description: 'API & Orchestration'
-  },
-  {
-    title: 'Intelligent Engines',
-    id: 'INT_ENG',
+    title: 'Intelligent Systems',
     icon: Brain,
-    skills: ['Computer Vision', 'OCR', 'RAG', 'PyTorch', 'OpenCV'],
-    description: 'AI & Inference pipelines'
+    skills: ['Computer Vision', 'OCR', 'RAG Systems', 'LLM Integration', 'NLP'],
+    description: 'AI & Machine Learning pipelines'
   },
   {
-    title: 'Data Infrastructure',
-    id: 'DATA_INFRA',
-    icon: Database,
-    skills: ['PostgreSQL', 'Firebase', 'Supabase', 'SQL', 'DBMS'],
-    description: 'Persistent state management'
+    title: 'Geospatial Intelligence',
+    icon: Globe,
+    skills: ['Leaflet.js', 'GeoJSON', 'GIS Systems', 'Spatial Queries', 'OSM'],
+    description: 'Spatial mapping & routing engines'
+  },
+  {
+    title: 'Architecture & DevOps',
+    icon: Server,
+    skills: ['Docker', 'Firebase', 'Vercel', 'Git', 'GitHub', 'n8n'],
+    description: 'Deployment & orchestration'
   },
   {
     title: 'Security & Forensics',
-    id: 'SEC_FOR',
     icon: Shield,
-    skills: ['Adversarial AI', 'Forensics', 'Trust Scoring', 'Ethical Hacking'],
-    description: 'Identity & integrity protection'
+    skills: ['Ethical Hacking', 'AI Forensics', 'Adversarial Security', 'DBMS'],
+    description: 'System integrity & adversarial defense'
   },
   {
-    title: 'Visual Interfaces',
-    id: 'VIS_INT',
+    title: 'Digital Interfaces',
     icon: Layout,
-    skills: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
-    description: 'Immersive frontend ecosystems'
+    skills: ['React', 'Next.js', 'Tailwind', 'Framer Motion', 'HTML5/CSS3'],
+    description: 'Interactive system frontends'
   }
 ];
 
@@ -66,7 +60,7 @@ export default function Stack() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#27272A]/30 border border-[#27272A]/50 rounded-lg overflow-hidden">
           {subsystems.map((sub, index) => (
             <motion.div
-              key={sub.id}
+              key={sub.title}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -81,7 +75,6 @@ export default function Stack() {
                   <div className="p-2 bg-[#16161D] rounded border border-[#27272A] group-hover:border-[#4F46E5]/50 transition-colors">
                     <sub.icon className="w-4 h-4 text-[#4F46E5]" />
                   </div>
-                  <div className="font-mono text-[9px] text-[#71717A] tracking-widest">{sub.id}</div>
                 </div>
 
                 <div className="space-y-2">

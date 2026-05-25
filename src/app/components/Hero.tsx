@@ -60,7 +60,7 @@ export default function Hero() {
               className="inline-flex items-center gap-3 px-4 py-2 bg-[#4F46E5]/10 border border-[#4F46E5]/20 rounded-full text-[#38BDF8] font-mono text-xs tracking-widest uppercase"
             >
               <span className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full animate-[pulse_2s_infinite]" />
-              Systems Engineering Interface // Ready
+              Engineering Status // Open to internships
             </motion.div>
 
             <h1 className="text-7xl md:text-8xl font-syne font-bold leading-[0.9] tracking-tight">
@@ -68,12 +68,12 @@ export default function Hero() {
             </h1>
 
             <p className="text-2xl md:text-3xl text-[#F5F5F5] font-syne font-medium max-w-xl leading-tight">
-              Designing <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">intelligent systems</span>, 
-              immersive interfaces, and scalable architectures.
+              Architect of <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">intelligent systems</span>, 
+              AI forensics, and critical infrastructure.
             </p>
 
             <p className="text-[#A1A1AA] text-lg max-w-lg font-inter leading-relaxed">
-              Computer Science engineer focused on AI pipelines, cybersecurity, spatial systems, and interactive digital experiences.
+              Building production-grade applications across adversarial security, geospatial systems, and high-performance backend architectures.
             </p>
           </div>
 
@@ -82,24 +82,23 @@ export default function Hero() {
               onClick={() => document.getElementById('systems')?.scrollIntoView({ behavior: 'smooth' })}
               className="group px-8 py-4 bg-white text-black rounded-sm font-inter text-sm font-bold flex items-center gap-3 hover:bg-[#4F46E5] hover:text-white transition-all duration-300"
             >
-              INITIALIZE WORKFLOW
+              EXPLORE SYSTEMS
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <a
-              href="https://github.com/Joshuamathewj2"
-              target="_blank"
+              href="mailto:joshuamathewj2@gmail.com"
               className="px-8 py-4 bg-transparent border border-[#27272A] text-[#F5F5F5] rounded-sm font-inter text-sm font-bold hover:border-[#4F46E5] transition-colors"
             >
-              SOURCE REPOSITORY [↗]
+              INITIALIZE SYNC
             </a>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-6 border-t border-[#27272A]/50">
             {[
-              { icon: Code, label: 'CORE', value: 'Full-Stack' },
+              { icon: Code, label: 'CORE', value: 'Backend' },
               { icon: Database, label: 'DATABASE', value: 'Architect' },
-              { icon: Brain, label: 'AI', value: 'Inference' },
+              { icon: Brain, label: 'AI', value: 'Forensics' },
               { icon: Shield, label: 'SEC', value: 'Adversarial' },
             ].map((stat, i) => (
               <motion.div 
@@ -148,11 +147,7 @@ export default function Hero() {
               <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(79,70,229,0.3)] pointer-events-none" />
               
               {/* Spatial UI Overlays */}
-              <div className="absolute top-6 right-6 font-mono text-[10px] text-[#4F46E5] tracking-widest opacity-40">
-                PORTRAIT_ID // ARCH_ENG_01
-              </div>
-              
-              <div className="absolute bottom-6 left-6 flex gap-1 items-end pointer-events-none">
+              <div className="absolute bottom-6 left-6 flex gap-1 items-end pointer-events-none opacity-20 group-hover:opacity-60 transition-opacity">
                 {[...Array(5)].map((_, i) => (
                   <motion.div
                     key={i}

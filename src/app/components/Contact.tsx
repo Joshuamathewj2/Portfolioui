@@ -12,12 +12,12 @@ export default function Contact() {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <span className="text-[#4F46E5] font-inter text-sm">05 // CONTACT</span>
+            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Connectivity // Sync Node</span>
             <div className="h-px flex-1 bg-gradient-to-r from-[#4F46E5] to-transparent" />
           </div>
-          <h2 className="text-5xl md:text-6xl font-clash">Let's Build Together</h2>
-          <p className="text-[#A1A1AA] mt-4 text-lg">
-            Open to collaboration on innovative projects and opportunities
+          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Initialize Connection</h2>
+          <p className="text-[#A1A1AA] mt-4 text-lg font-inter">
+            Open for strategic collaborations and high-impact engineering roles.
           </p>
         </motion.div>
 
@@ -29,7 +29,7 @@ export default function Contact() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-clash mb-6">Get in Touch</h3>
+              <h3 className="text-2xl font-syne mb-6">Get in Touch</h3>
               <p className="text-[#A1A1AA] leading-relaxed mb-8">
                 I'm currently seeking opportunities in backend engineering, AI systems development,
                 and full-stack roles. If you're building something innovative, let's connect.
@@ -80,7 +80,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="glass-effect rounded-2xl p-8"
           >
-            <h3 className="text-xl font-clash mb-6">Send a Message</h3>
+            <h3 className="text-xl font-syne mb-6">Send a Message</h3>
 
             <form className="space-y-6">
               <div>

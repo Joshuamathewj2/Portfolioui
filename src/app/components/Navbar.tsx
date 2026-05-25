@@ -20,10 +20,10 @@ export default function Navbar() {
 
   const navItems = [
     { id: 'hero', label: 'Initialize' },
-    { id: 'systems', label: 'Systems' },
-    { id: 'stack', label: 'Toolkit' },
-    { id: 'lab', label: 'Laboratory' },
-    { id: 'contact', label: 'Contact' },
+    { id: 'systems', label: 'Selected Work' },
+    { id: 'stack', label: 'Tech Stack' },
+    { id: 'lab', label: 'Research' },
+    { id: 'contact', label: 'Connect' },
   ];
 
   return (

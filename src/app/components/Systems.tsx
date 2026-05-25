@@ -5,95 +5,95 @@ const projects = [
   {
     id: 'pixeltrust',
     title: 'PixelTrust',
-    description: 'AI-powered image forensics pipeline. Detects manipulations through frequency domain decomposition and neural feature extraction.',
-    tags: ['FastAPI', 'PyTorch', 'Computer Vision'],
-    category: 'AI_FORENSICS',
-    visual: 'thermal', // Custom visual style
+    description: 'AI-powered image authenticity verification. Detects manipulated and AI-generated images through layered frequency analysis.',
+    tags: ['FastAPI', 'Python', 'Computer Vision'],
+    category: 'AI FORENSICS',
+    visual: 'thermal',
     icon: Search,
     link: 'https://pixel-trust.vercel.app/',
     details: [
-      'Metadata forgery detection engine',
-      'Pixel-level error level analysis (ELA)',
-      'Neural manipulation detection',
-      'Explainable trust-score HUD'
+      'Metadata forgery inspection',
+      'Frequency domain decomposition',
+      'Pixel-level feature extraction',
+      'Explainable trust scores'
     ]
   },
   {
     id: 'thrillcircuit',
     title: 'ThrillCircuit',
-    description: 'Production-grade prompt injection detection engine for LLM protection. Neutralizes adversarial jailbreaks in sub-10ms.',
-    tags: ['Python', 'Security', 'LLM Defense'],
-    category: 'CYBER_SEC',
+    description: 'Production-grade prompt injection detection engine. Protects LLM applications from jailbreaks and adversarial attacks.',
+    tags: ['Python', 'Flask', 'NLP'],
+    category: 'LLM SECURITY',
     visual: 'security',
     icon: Shield,
     link: 'https://github.com/Joshuamathewj2',
     details: [
-      'Adversarial payload neutralization',
-      'Multilingual obfuscation detection',
-      'Stateless REST microservice',
-      'High-entropy pattern matching'
+      'Heuristic pattern matching',
+      'Sub-10ms detection latency',
+      'Multilingual rule evaluation',
+      'Stateless REST architecture'
     ]
   },
   {
     id: 'gis',
-    title: 'GIS Evacuation System',
-    description: 'Next-gen disaster intelligence platform for real-time shelter routing in degraded connectivity environments.',
-    tags: ['Leaflet.js', 'GeoJSON', 'Spatial'],
+    title: 'GIS Evacuation',
+    description: 'Emergency evacuation platform identifying nearest shelters using structured GeoJSON datasets in real-time.',
+    tags: ['JavaScript', 'Leaflet.js', 'GeoJSON'],
     category: 'GEOSPATIAL',
     visual: 'map',
     icon: Globe,
     link: 'https://gis-smart-evacuation-system.vercel.app/',
     details: [
-      'Nearest-neighbor spatial queries',
-      'Offline-capable GeoJSON engine',
-      'Dynamic pathfinding visualization',
-      'Localized disaster node network'
+      'Nearest-neighbor spatial search',
+      'Offline-capable routing engine',
+      'Dynamic path rendering',
+      'Degraded connectivity support'
     ]
   },
   {
     id: 'pillpulse',
     title: 'PillPulse',
-    description: 'Autonomous medication adherence system. Prescription OCR extraction coupled with automated healthcare notification pipelines.',
-    tags: ['Firebase', 'OCR', 'n8n'],
-    category: 'HEALTHCARE_AI',
+    description: 'Medication adherence automation. Prescription OCR extraction coupled with automated caregiver notification pipelines.',
+    tags: ['React', 'Firebase', 'n8n'],
+    category: 'HEALTHCARE AI',
     visual: 'medical',
     icon: Activity,
     link: 'https://pill-pulse-172010-rhl4.vercel.app/',
     details: [
-      'Computer vision prescription extraction',
-      'Automated scheduling orchestration',
-      'Multi-channel FCM delivery',
-      'Caregiver oversight dashboard'
+      'Prescription OCR parser',
+      'Automated schedule orchestration',
+      'Firebase Cloud Messaging',
+      'Caregiver oversight HUD'
     ]
   },
   {
     id: 'mirage',
     title: 'MIRAGE',
-    description: 'Adaptive reality platform using behavioral trust scoring and digital deception for threat intelligence.',
+    description: 'Adaptive cybersecurity platform using behavioral trust scoring and deception-based intelligence for threat detection.',
     tags: ['React Native', 'Supabase', 'AI'],
-    category: 'BEHAVIORAL_SEC',
+    category: 'BEHAVIORAL SEC',
     visual: 'deception',
     icon: Cpu,
     link: 'https://github.com/Joshuamathewj2',
     details: [
+      'Behavioral pattern analysis',
+      'Dynamic trust-state mutation',
       'Honeypot channel orchestration',
-      'Dynamic UI trust-state mutation',
-      'Real-time behavioral scoring',
-      'Reality engine synchronization'
+      'Real-time threat syncing'
     ]
   },
   {
     id: 'debatrix',
     title: 'Debatrix',
-    description: 'AI-powered debate and critical thinking platform. RAG pipelines for evidence-backed reasoning chains.',
+    description: 'AI-powered debate platform. RAG pipelines with structured reasoning and evidence-backed argumentation via Claude API.',
     tags: ['Claude API', 'FastAPI', 'RAG'],
-    category: 'SYSTEMS_AI',
+    category: 'SYSTEMS AI',
     visual: 'logic',
     icon: Database,
     link: 'https://github.com/Joshuamathewj2',
     details: [
-      'Structured reasoning orchestration',
-      'Evidence-backed RAG integration',
+      'Evidence retrieval pipelines',
+      'Structured reasoning chains',
       'Streaming argument evaluation',
       'Citation verification engine'
     ]
@@ -112,9 +112,9 @@ export default function Systems() {
         >
           <div className="flex items-center gap-3">
             <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
-            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Registry // Production Systems</span>
+            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Deployed // Production Systems</span>
           </div>
-          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Engineering Modules</h2>
+          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Selected Work</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
