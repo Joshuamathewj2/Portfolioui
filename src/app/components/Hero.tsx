@@ -64,7 +64,10 @@ export default function Hero() {
             </motion.div>
 
             <h1 className="text-7xl md:text-8xl font-syne font-bold leading-[0.9] tracking-tight">
-              Joshua A<span className="text-[#4F46E5]">.</span>
+              <span className="hero-name-glow">
+                <span className="hero-name-gradient">Joshua A</span>
+              </span>
+              <span className="text-[#4F46E5]">.</span>
             </h1>
 
             <p className="text-2xl md:text-3xl text-[#F5F5F5] font-syne font-medium max-w-xl leading-tight">

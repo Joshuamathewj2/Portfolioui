@@ -1,3 +1,68 @@
 @import 'tailwindcss';
 @plugin 'lightswind/plugin';
 
+@layer utilities {
+  @keyframes gradient-slow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes shimmer-sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .hero-name-gradient {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      #F5F7FF 0%,
+      #B8C0FF 35%,
+      #5B5BFF 65%,
+      #B8C0FF 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-slow 12s ease infinite;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+  }
+
+  .hero-name-gradient::before {
+    content: "Joshua A";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer-sweep 6s linear infinite;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-name-glow {
+    filter: drop-shadow(0 0 10px rgba(91, 91, 255, 0.23));
+    transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block;
+    padding: 0 10px; /* Prevent clipping of glow */
+    margin: 0 -10px;
+  }
+
+  .hero-name-glow:hover {
+    filter: drop-shadow(0 0 22px rgba(91, 91, 255, 0.45));
+  }
+}
+
