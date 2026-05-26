@@ -1,119 +1,125 @@
 'use client';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
-
-const bootSequence = [
-  'INITIALIZING_NEURAL_ENGINE',
-  'SYNCING_SPATIAL_GRIDS',
-  'CALIBRATING_OPTICAL_SENSORS',
-  'ESTABLISHING_SECURE_LINK',
-  'BOOT_COMPLETE'
-];
+import { Terminal, Check, Copy } from 'lucide-react';
 
 export default function Loader({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
-  const [sequenceIndex, setSequenceIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
+  const [isComplete, setIsComplete] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const command = "npm run joshua";
 
+  // Typing animation logic
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(onComplete, 500);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 20);
+    let timeout: ReturnType<typeof setTimeout>;
+    if (index < command.length) {
+      timeout = setTimeout(() => {
+        setDisplayedText((prev) => prev + command.charAt(index));
+        setIndex((prev) => prev + 1);
+      }, 70); // Smooth, realistic typing speed
+    } else {
+      timeout = setTimeout(() => {
+        setIsComplete(true);
+        // Wait briefly after showing completion, then trigger app load
+        setTimeout(() => {
+          onComplete();
+        }, 1200);
+      }, 400); // Pause before outputting the success state
+    }
+    return () => clearTimeout(timeout);
+  }, [index, command, onComplete]);
 
-    const sequenceInterval = setInterval(() => {
-      setSequenceIndex((prev) => (prev < bootSequence.length - 1 ? prev + 1 : prev));
-    }, 400);
-
-    return () => {
-      clearInterval(interval);
-      clearInterval(sequenceInterval);
-    };
-  }, [onComplete]);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(command);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+      exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
       transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
       className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
     >
-      {/* Background Ambience */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#4F46E533_0%,transparent_70%)]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#4F46E511] rounded-full blur-[120px]" />
-      </div>
-
-      <div className="relative z-10 w-full max-w-md px-10 space-y-12">
-        {/* Logo/Name Area */}
-        <div className="text-center space-y-4">
-          <motion.div
-            initial={{ opacity: 0, letterSpacing: '0.5em' }}
-            animate={{ opacity: 1, letterSpacing: '0.2em' }}
-            className="text-4xl font-syne font-bold text-white"
-          >
-            JOSHUA<span className="text-[#4F46E5]">.</span>A
-          </motion.div>
-          <motion.div 
-            className="text-[10px] font-mono text-[#4F46E5] uppercase tracking-[0.4em]"
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            Engineering Systems OS v2.0
-          </motion.div>
-        </div>
-
-        {/* Progress System */}
-        <div className="space-y-4">
-          <div className="flex justify-between items-end font-mono text-[9px] uppercase tracking-widest text-[#71717A]">
-            <div className="flex items-center gap-3">
-              <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full animate-pulse" />
-              {bootSequence[sequenceIndex]}
-            </div>
-            <div className="text-[#F5F5F5] font-bold">{progress}%</div>
-          </div>
-
-          <div className="relative h-[2px] w-full bg-[#27272A] rounded-full overflow-hidden">
-            <motion.div
-              className="absolute top-0 left-0 h-full bg-[#4F46E5] shadow-[0_0_15px_rgba(79,70,229,0.8)]"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ ease: "linear" }}
-            />
-          </div>
-
-          {/* Hex Detail Decorative */}
-          <div className="flex justify-center gap-1">
-            {[...Array(20)].map((_, i) => (
-              <div 
-                key={i} 
-                className={`h-0.5 w-1.5 rounded-full transition-colors duration-300 ${
-                  i < (progress / 5) ? 'bg-[#4F46E5]/40' : 'bg-[#27272A]'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
+      {/* Cinematic Background Ambience */}
+      <div className="absolute inset-0 opacity-40 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,#4F46E522_0%,transparent_60%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#4F46E50A] rounded-full blur-[140px]" />
       </div>
 
       {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
-      
-      {/* Corner Scanning lines */}
-      <div className="absolute top-0 left-0 w-32 h-px bg-gradient-to-r from-transparent via-[#4F46E5] to-transparent animate-[scan_3s_linear_infinite]" />
-      <div className="absolute bottom-0 right-0 w-32 h-px bg-gradient-to-r from-transparent via-[#4F46E5] to-transparent animate-[scan_3s_linear_infinite_reverse]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none" />
 
-      <style>{`
-        @keyframes scan {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(1000%); }
-        }
-      `}</style>
+      {/* Terminal Card Container */}
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative z-10 w-full max-w-lg px-6"
+      >
+        {/* Subtle bloom/shadow under the terminal */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-[#4F46E5]/0 via-[#4F46E5]/20 to-[#4F46E5]/0 rounded-xl blur-xl opacity-50" />
+        
+        <div className="relative border rounded-lg backdrop-blur-xl w-full text-white overflow-hidden cinematic-shadow bg-[#0D0D12]/80 border-[#27272A]/80 shadow-[0_0_40px_-10px_rgba(79,70,229,0.15)]">
+          {/* Header */}
+          <div className="flex items-center justify-between px-4 py-3 bg-[#16161D]/90 border-b border-[#27272A]/50">
+            <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[#A1A1AA]">
+              <Terminal className="w-4 h-4 text-[#4F46E5]" />
+              SYSTEM_BOOT_SEQUENCE
+            </div>
+            <button 
+              className="p-1.5 border border-transparent rounded transition-all hover:bg-[#27272A] text-[#71717A] hover:text-white"
+              onClick={handleCopy}
+              aria-label="Copy to clipboard"
+            >
+              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            </button>
+          </div>
+
+          {/* Content Body */}
+          <div className="p-6 text-sm font-mono min-h-[140px] flex flex-col justify-center">
+            <div className="flex items-start gap-3">
+              <span className="text-[#4F46E5] mt-0.5">❯</span>
+              <div className="flex-1">
+                {/* The Typed Command */}
+                <motion.div className="flex items-center text-gray-200 text-base">
+                  {displayedText}
+                  {!isComplete && (
+                    <motion.span 
+                      className="inline-block w-2h h-5 w-2 bg-[#4F46E5] ml-1 shadow-[0_0_8px_#4F46E5]"
+                      animate={{ opacity: [1, 0] }}
+                      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                    />
+                  )}
+                </motion.div>
+
+                {/* The Output Frame */}
+                {isComplete && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-4 pt-4 border-t border-[#27272A]/40 flex items-center gap-3"
+                  >
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-400/90 tracking-widest text-xs font-semibold">
+                      [✓] PORTFOLIO INITIALIZED
+                    </span>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Subtle reflection at bottom of terminal */}
+          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#4F46E5]/40 to-transparent" />
+        </div>
+        
+        {/* Terminal ground reflection */}
+        <div className="absolute -bottom-12 left-10 right-10 h-6 bg-[#4F46E5]/10 blur-xl rounded-[100%]" />
+      </motion.div>
     </motion.div>
   );
 }
