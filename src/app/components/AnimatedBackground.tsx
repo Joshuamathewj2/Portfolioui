@@ -13,6 +13,27 @@ export default function AnimatedBackground({ opacity }: AnimatedBackgroundProps)
         className="absolute inset-0 bg-gradient-to-b from-[#0a0a14] via-[#050505] to-[#020204]" 
       />
 
+      {/* Primary Global Background Image Layer (Atmospheric Presence) */}
+      <motion.div 
+        animate={{
+          scale: [1, 1.08, 1],
+        }}
+        transition={{
+          duration: 35,
+          repeat: Infinity,
+          ease: "easeInOut",
+          repeatType: "reverse"
+        }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.38] pointer-events-none"
+        style={{ 
+          backgroundImage: 'url(/bg.png)',
+          filter: 'contrast(1.2) brightness(1.15) saturate(1.1)'
+        }}
+      />
+      
+      {/* Refined Atmospheric Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/20 via-transparent to-[#020204]/40 pointer-events-none" />
+
       {/* Striped Spatial Background */}
       <div 
         className="absolute inset-0 opacity-[0.03]"

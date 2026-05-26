@@ -1,5 +1,6 @@
 'use client';
 import { motion } from 'motion/react';
+import { HangingIdCard } from './HangingIdCard';
 
 export default function About() {
   return (
@@ -40,20 +41,9 @@ export default function About() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="flex items-start justify-center pt-8"
           >
-            {[
-              { label: 'Institution', value: 'Loyola ICAM', sub: 'CSE · Expected 2028' },
-              { label: 'Academic Standing', value: '8.9 / 10.0 CGPA', sub: 'Consistent excellence' },
-              { label: 'Focus Areas', value: 'AI · Security', sub: 'Backend · GIS' },
-              { label: 'Location', value: 'Chennai', sub: 'Remote & relocation' }
-            ].map((meta) => (
-              <div key={meta.label} className="p-8 bg-[#0D0D12] border border-[#27272A]/50 rounded-lg group hover:border-[#4F46E5]/40 transition-all duration-500">
-                <div className="text-[10px] text-[#4F46E5] font-mono tracking-widest uppercase mb-4">{meta.label}</div>
-                <div className="text-xl font-syne font-bold text-white mb-1">{meta.value}</div>
-                <div className="text-sm text-[#71717A] font-inter">{meta.sub}</div>
-              </div>
-            ))}
+            <HangingIdCard />
           </motion.div>
         </div>
       </div>
