@@ -46,7 +46,7 @@ export const HangingIdCard = () => {
   const dragStartX  = useRef(0);
   const dragAngle0  = useRef(0);
 
-  const ropeLength  = 110;
+  const ropeLength  = 75;
   const ropeColor   = '#4338ca'; // indigo rope matching cyberpunk theme
   const accentColor = '#4F46E5';
 
@@ -137,6 +137,7 @@ export const HangingIdCard = () => {
         userSelect: 'none',
         touchAction: 'none',
         paddingTop: '8px',
+        marginTop: '-80px',
       }}
     >
       {/* Ceiling anchor with glow */}

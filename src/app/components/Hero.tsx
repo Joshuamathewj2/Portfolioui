@@ -19,6 +19,39 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { ArrowRight, Code, Database, Brain, Globe, Shield, Github, Linkedin } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import TextScramble from './TextScramble';
+
+function MagneticButton({ children }: { children: React.ReactNode }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.1 });
+  const mouseY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.1 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { clientX, clientY, currentTarget } = e;
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    x.set(clientX - centerX);
+    y.set(clientY - centerY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: mouseX, y: mouseY }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   const mouseX = useMotionValue(0);
@@ -65,28 +98,30 @@ export default function Hero() {
 
             <h1 className="text-7xl md:text-8xl font-syne font-bold leading-[0.9] tracking-tight">
               <span className="hero-name-glow">
-                <span className="hero-name-gradient">Joshua A</span>
+                <TextScramble text="Joshua A" textClassName="hero-name-gradient" />
               </span>
               <span className="text-[#4F46E5]">.</span>
             </h1>
 
             <p className="text-2xl md:text-3xl text-[#F5F5F5] font-syne font-medium max-w-xl leading-tight">
-              Computer Science Engineering Student <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">architecting systems</span> for the next generation of AI and security.
+              Specializing in <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">Critical Systems Engineering</span>—bridging AI Forensics, Cybersecurity, and Scalable Infrastructure.
             </p>
 
             <p className="text-[#A1A1AA] text-lg max-w-2xl font-inter leading-relaxed">
-              Third-year student at <span className="text-white font-medium">LICET</span>, building production-grade applications across AI forensics, adversarial security, and scalable infrastructure.
+              Third-year Computer Science student at <span className="text-white font-medium">LICET</span>. Engineering high-reliability solutions for adversarial threat detection and automated operational pipelines.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-6">
-            <button
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group px-8 py-4 bg-white text-black rounded-sm font-inter text-sm font-bold flex items-center gap-3 hover:bg-[#4F46E5] hover:text-white transition-all duration-300"
-            >
-              VIEW PROJECTS
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
+            <MagneticButton>
+              <button
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group px-8 py-4 bg-white text-black rounded-sm font-inter text-sm font-bold flex items-center gap-3 hover:bg-[#4F46E5] hover:text-white transition-all duration-300"
+              >
+                VIEW PROJECTS
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </MagneticButton>
 
             <div className="flex items-center gap-4">
               <a
@@ -201,6 +236,11 @@ export default function Hero() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-[#4F46E5]/10 via-transparent to-transparent blur-3xl pointer-events-none" />
         </motion.div>
 
+      </div>
+
+      {/* Background Decor */}
+      <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
+        <div className="absolute inset-0 diagonal-stripes" />
       </div>
 
       {/* Background Architectural Connectors */}

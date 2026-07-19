@@ -26,15 +26,30 @@ export default function About() {
             viewport={{ once: true }}
             className="space-y-6 text-xl text-[#A1A1AA] leading-relaxed font-inter"
           >
-            <p>
-              Third-year Computer Science Engineering student at <strong className="text-white">Loyola ICAM College of Engineering and Technology</strong>, operating at the intersection of AI systems, cybersecurity, and production infrastructure.
-            </p>
-            <p>
-              Specialized in end-to-end system design: building pixel-level image forensics pipelines with adversarial robustness, engineering sub-10ms prompt injection detection engines, and designing geospatial evacuation platforms optimized for degraded connectivity environments.
-            </p>
-            <p>
-              My internship at <strong className="text-white">TNEB Head Office</strong> provided deep exposure to enterprise GIS infrastructure, critical utility network architecture, and large-scale operational systems. That experience shapes my approach to reliability, correctness, and systems thinking.
-            </p>
+            <ul className="space-y-6">
+              {[
+                {
+                  label: "Systems Core",
+                  text: "Developing high-integrity architectures at LICET, focusing on the intersection of AI forensics and adversarial security."
+                },
+                {
+                  label: "Industrial Edge",
+                  text: "Hardened by TNEB Head Office internship, applying enterprise GIS and network reliability principles to modern software stacks."
+                },
+                {
+                  label: "Optimization",
+                  text: "Architecting sub-10ms security engines and geospatial systems optimized for high-throughput and degraded environments."
+                }
+              ].map((item, i) => (
+                <li key={i} className="flex gap-4 group/item">
+                  <div className="mt-1.5 w-1.5 h-1.5 bg-[#4F46E5] rounded-full flex-shrink-0 group-hover/item:scale-150 transition-transform duration-300" />
+                  <div>
+                    <span className="text-[#4F46E5] font-mono text-[10px] tracking-widest uppercase block mb-1">{item.label}</span>
+                    <p className="text-xl text-[#A1A1AA] leading-relaxed">{item.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </motion.div>
 
           <motion.div

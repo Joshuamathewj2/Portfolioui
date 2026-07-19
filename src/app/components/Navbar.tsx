@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -13,19 +14,14 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const navItems = [
-    { id: 'about', label: 'About' },
-    { id: 'stack', label: 'Stack' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'education', label: 'Education' },
-    { id: 'recognition', label: 'Recognition' },
-    { id: 'contact', label: 'Connect' },
+    { id: 'about', label: 'About', route: '/about' },
+    { id: 'stack', label: 'Stack', route: '/stack' },
+    { id: 'projects', label: 'Projects', route: '/projects' },
+    { id: 'experience', label: 'Experience', route: '/experience' },
+    { id: 'education', label: 'Education', route: '/education' },
+    { id: 'recognition', label: 'Recognition', route: '/recognition' },
+    { id: 'contact', label: 'Connect', route: '/connect' },
   ];
 
   return (
@@ -39,42 +35,49 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <motion.div
-          onClick={() => scrollToSection('hero')}
-          className="text-xl font-syne font-bold tracking-tighter cursor-pointer flex items-center gap-2 group"
-          whileHover={{ scale: 1.02 }}
-        >
-          <div className="w-2 h-2 bg-[#4F46E5] rounded-full group-hover:scale-150 transition-transform" />
-          JOSHUA A<span className="text-[#4F46E5]">.</span>
-        </motion.div>
+        <Link to="/" className="no-underline text-inherit">
+          <motion.div
+            className="text-xl font-syne font-bold tracking-tighter cursor-pointer flex items-center gap-2 group"
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className="w-2 h-2 bg-[#4F46E5] rounded-full group-hover:scale-150 transition-transform" />
+            JOSHUA A<span className="text-[#4F46E5]">.</span>
+          </motion.div>
+        </Link>
 
         <div className="hidden md:flex items-center gap-10">
           {navItems.map((item, index) => (
-            <motion.button
+            <Link
               key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="text-[10px] font-mono tracking-[0.2em] text-[#71717A] hover:text-[#4F46E5] transition-colors relative group uppercase"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: index * 0.1 }}
+              to={item.route}
+              className="text-[10px] font-mono tracking-[0.2em] text-[#71717A] hover:text-[#4F46E5] transition-colors relative group uppercase no-underline"
             >
-              <span className="text-[#4f46e5] opacity-0 group-hover:opacity-100 transition-opacity mr-1 font-bold">[</span>
-              {item.label}
-              <span className="text-[#4f46e5] opacity-0 group-hover:opacity-100 transition-opacity ml-1 font-bold">]</span>
-            </motion.button>
+              <motion.span
+                className="inline-flex items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <span className="text-[#4f46e5] opacity-0 group-hover:opacity-100 transition-opacity mr-1 font-bold">[</span>
+                {item.label}
+                <span className="text-[#4f46e5] opacity-0 group-hover:opacity-100 transition-opacity ml-1 font-bold">]</span>
+              </motion.span>
+            </Link>
           ))}
         </div>
 
-        <motion.button
-          onClick={() => scrollToSection('contact')}
-          className="font-mono text-[10px] tracking-widest px-5 py-2 border border-[#4F46E5]/30 text-[#F5F5F5] uppercase hover:bg-[#4F46E5] hover:border-[#4F46E5] transition-all duration-300"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Initialize Sync
-        </motion.button>
+        <Link to="/connect" className="no-underline">
+          <motion.button
+            className="font-mono text-[10px] tracking-widest px-5 py-2 border border-[#4F46E5]/30 text-[#F5F5F5] uppercase hover:bg-[#4F46E5] hover:border-[#4F46E5] transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Initialize Sync
+          </motion.button>
+        </Link>
       </div>
     </motion.nav>
   );
 }
+
 
