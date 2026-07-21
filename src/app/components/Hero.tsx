@@ -182,8 +182,8 @@ export default function Hero() {
             style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
             className="relative w-full h-full max-w-[480px] group"
           >
-            {/* Cinematic Frame */}
-            <div className="absolute inset-0 z-10 border border-white/5 rounded-2xl overflow-hidden bg-[#0A0A0E] cinematic-shadow">
+            {/* Seamless sci-fi edge masked portrait */}
+            <div className="absolute inset-0 z-10 overflow-hidden [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_100%)]">
               <ImageWithFallback
                 src="/profilepic.png"
                 alt="Joshua A Portrait"
@@ -191,8 +191,8 @@ export default function Hero() {
               />
               
               {/* Edge Fade Blending */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090a10] via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#090a10] via-transparent to-transparent opacity-40" />
               
               {/* Holographic Rim Lighting */}
               <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(79,70,229,0.3)] pointer-events-none" />

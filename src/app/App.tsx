@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Routes, Route, Link, useLocation } from 'react-router';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Capabilities from './components/Capabilities';
 import About from './components/About';
 import Stack from './components/Stack';
 import Experience from './components/Experience';
@@ -71,7 +72,12 @@ export default function App() {
 
             <main className="relative z-10">
               <Routes>
-                <Route path="/" element={<Reveal><Hero /></Reveal>} />
+                <Route path="/" element={
+                  <>
+                    <Reveal><Hero /></Reveal>
+                    <Reveal><Capabilities /></Reveal>
+                  </>
+                } />
                 <Route path="/about" element={<Reveal><About /></Reveal>} />
                 <Route path="/stack" element={<Reveal><Stack /></Reveal>} />
                 <Route path="/projects" element={<Reveal><Systems /></Reveal>} />
