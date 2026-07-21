@@ -15,13 +15,9 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { id: 'about', label: 'About', route: '/about' },
-    { id: 'stack', label: 'Stack', route: '/stack' },
-    { id: 'projects', label: 'Projects', route: '/projects' },
-    { id: 'experience', label: 'Experience', route: '/experience' },
-    { id: 'education', label: 'Education', route: '/education' },
-    { id: 'recognition', label: 'Recognition', route: '/recognition' },
-    { id: 'contact', label: 'Connect', route: '/connect' },
+    { id: 'projects', label: 'PROJECTS', route: '/projects' },
+    { id: 'experience', label: 'EXPERIENCE', route: '/experience' },
+    { id: 'system-map', label: 'SYSTEM MAP', route: '/' },
   ];
 
   return (
