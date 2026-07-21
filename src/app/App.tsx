@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { Routes, Route, Link, useLocation } from 'react-router';
+import { Routes, Route, Link, useLocation, Navigate } from 'react-router';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Capabilities from './components/Capabilities';
 import About from './components/About';
 import Stack from './components/Stack';
 import Experience from './components/Experience';
-import Education from './components/Education';
 import Systems from './components/Systems';
 import Recognition from './components/Recognition';
 import Contact from './components/Contact';
@@ -82,7 +81,6 @@ export default function App() {
                 <Route path="/stack" element={<Reveal><Stack /></Reveal>} />
                 <Route path="/projects" element={<Reveal><Systems /></Reveal>} />
                 <Route path="/experience" element={<Reveal><Experience /></Reveal>} />
-                <Route path="/education" element={<Reveal><Education /></Reveal>} />
                 <Route path="/recognition" element={<Reveal><Recognition /></Reveal>} />
                 <Route path="/connect" element={<Reveal><Contact /></Reveal>} />
               </Routes>

@@ -426,38 +426,49 @@ const GlassCoinCarousel: React.FC<{
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* 3D Glass Coin Surface */}
+                {/* 3D Glass Coin Surface with rotating electric conic gradient border */}
                 <motion.div
-                  className="absolute inset-0 rounded-full border bg-[#050508]/60 backdrop-blur-md flex flex-col items-center justify-center p-3 text-center"
-                  style={{
-                    borderColor: isCoinHovered 
-                      ? (item.glow || "rgba(79,70,229,0.5)") 
-                      : "rgba(255,255,255,0.08)",
-                    boxShadow: isCoinHovered
-                      ? `0 0 35px ${item.glow || "rgba(79,70,229,0.3)"}, inset 0 0 15px rgba(255,255,255,0.05)`
-                      : "0 0 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.02)",
-                  }}
+                  className="absolute inset-0 rounded-full p-[2px] overflow-hidden flex items-center justify-center bg-zinc-950/80 shadow-[0_0_20px_rgba(0,0,0,0.6)]"
                   whileHover={{ scale: 1.12, y: -10 }}
                   transition={{ type: "spring", stiffness: 300, damping: 15 }}
                 >
-                  {/* Neon Glow Ring */}
+                  {/* Conic-gradient rotating border */}
                   <div 
-                    className="absolute inset-1.5 rounded-full border border-dashed opacity-25 pointer-events-none"
-                    style={{ borderColor: item.glow || "rgba(79,70,229,0.3)" }}
+                    className="absolute inset-[-50%] rounded-full animate-[spin_4s_linear_infinite] pointer-events-none"
+                    style={{
+                      background: "conic-gradient(from 0deg, #a855f7 0%, #8b5cf6 25%, #00fffc 50%, #8b5cf6 75%, #a855f7 100%)",
+                      opacity: isCoinHovered ? 1 : 0.45,
+                    }}
                   />
 
-                  {/* Coin Label */}
-                  <span 
-                    className="text-[7px] font-mono tracking-widest uppercase mb-1 opacity-45"
-                    style={{ color: isCoinHovered ? (item.glow || "#ffffff") : "#888888" }}
+                  {/* Inner Content Container (Masking center of conic gradient) */}
+                  <div
+                    className="relative w-full h-full rounded-full bg-[#050508]/95 backdrop-blur-md flex flex-col items-center justify-center p-3 text-center z-10 transition-all duration-300"
+                    style={{
+                      boxShadow: isCoinHovered
+                        ? "0 0 18px rgba(168, 85, 247, 0.5), inset 0 0 10px rgba(168, 85, 247, 0.3)"
+                        : "inset 0 0 10px rgba(255,255,255,0.02)",
+                    }}
                   >
-                    COIN {index + 1}
-                  </span>
+                    {/* Neon Glow Ring */}
+                    <div 
+                      className="absolute inset-1.5 rounded-full border border-dashed opacity-25 pointer-events-none"
+                      style={{ borderColor: isCoinHovered ? "#a855f7" : "rgba(255,255,255,0.08)" }}
+                    />
 
-                  {/* Project Title */}
-                  <span className="text-[9px] sm:text-[10px] font-mono font-bold leading-tight uppercase text-zinc-100 tracking-tighter max-w-[80px] break-words line-clamp-2">
-                    {coinLabel}
-                  </span>
+                    {/* Coin Label */}
+                    <span 
+                      className="text-[7px] font-mono tracking-widest uppercase mb-1 opacity-45"
+                      style={{ color: isCoinHovered ? "#a855f7" : "#888888" }}
+                    >
+                      COIN {index + 1}
+                    </span>
+
+                    {/* Project Title */}
+                    <span className="text-[9px] sm:text-[10px] font-mono font-bold leading-tight uppercase text-zinc-100 tracking-tighter max-w-[80px] break-words line-clamp-2">
+                      {coinLabel}
+                    </span>
+                  </div>
                 </motion.div>
               </div>
             );
