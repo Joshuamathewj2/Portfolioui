@@ -1,8 +1,10 @@
 'use client';
-import { motion, useScroll } from 'motion/react';
-import { Briefcase, GraduationCap } from 'lucide-react';
+import { motion, useScroll, useSpring, useInView } from 'motion/react';
+import { GraduationCap, MapPin } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const experiences = [
   {
@@ -11,6 +13,8 @@ const experiences = [
     period: 'HEAD OFFICE, CHENNAI',
     session: 'TAMIL_INTEL',
     images: ['/tnebi.png'],
+    // Each tag is named in the points below
+    tags: ['Data Center Ops', 'Network Architecture', 'GIS', 'LT Billing Systems', 'Substation Monitoring'],
     points: [
       'Industrial exposure to Data Center Operations, Network Architectures, and Enterprise Hardware systems supporting state-level utility infrastructure',
       'Studied Web Applications and LT Billing Systems architecture for large-scale public service management',
@@ -25,6 +29,7 @@ const experiences = [
     period: 'HYBRID PIPELINE // SECURE_INTEL',
     session: 'SECURE_INTEL',
     images: ['/snsi.png', '/snsi2.png'],
+    tags: ['AWS', 'Check Point NGFW', 'CloudGuard', 'Linux CLI', 'iptables', 'DLP'],
     points: [
       'Engineered an enterprise Next-Generation Firewall (NGFW) architecture on AWS from scratch, deploying a Check Point Security Management Server and CloudGuard Gateway.',
       'Troubleshot system initialization by dropping into Linux Expert Mode via CLI to bypass config wizard lockouts.',
@@ -58,44 +63,146 @@ const education = [
   }
 ];
 
-interface TerminalPointProps {
-  text: string;
-  delay: number;
+/** Score as a 0–100 fill: "8.9" on a 10-point scale → 89, "94%" → 94. */
+const scoreToPercent = (value: string) =>
+  value.endsWith('%') ? parseFloat(value) : parseFloat(value) * 10;
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="w-1.5 h-1.5 bg-[#a855f7] rounded-full shadow-[0_0_8px_#a855f7]" />
+      <span className="text-[#C084FC] font-mono text-xs tracking-widest uppercase">{children}</span>
+    </div>
+  );
 }
 
-function TerminalPoint({ text, delay }: TerminalPointProps) {
+function ExperienceBlock({ exp, index }: { exp: (typeof experiences)[number]; index: number }) {
+  const listRef = useRef<HTMLOListElement>(null);
+  const { scrollYProgress } = useScroll({ target: listRef, offset: ['start 75%', 'end 55%'] });
+  const rail = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
+
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -10 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay, duration: 0.5 }}
-      className="flex gap-4 group/point font-mono"
-    >
-      <span className="text-[#4F46E5] font-bold">▸</span>
-      <p className="text-lg text-[#A1A1AA] leading-relaxed">
-        <span className="text-[#38BDF8]">$</span> {text}
-      </p>
-    </motion.div>
+    <article className="relative grid lg:grid-cols-[0.95fr_1.05fr] gap-12 lg:gap-20">
+      {/* Left: identity, pinned while the points scroll past on large screens */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.9, ease: EASE }}
+        className="lg:sticky lg:top-28 self-start space-y-7"
+      >
+        <div className="flex items-end gap-5">
+          <span className="font-syne font-bold text-[7rem] md:text-[9rem] leading-[0.75] tracking-tighter text-outline select-none" aria-hidden>
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="mb-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#38BDF8]/30 bg-[#38BDF8]/10 font-mono text-[10px] tracking-widest uppercase text-[#7DD3FC]">
+            <MapPin className="w-3 h-3" />
+            {exp.period}
+          </span>
+        </div>
+
+        <div className="space-y-3">
+          <h3 className="font-syne font-bold text-3xl md:text-4xl tracking-tight text-white leading-tight">{exp.role}</h3>
+          <div className="font-mono text-sm font-bold uppercase tracking-wider text-[#a855f7]">
+            <span className="text-[#71717A]">@</span> {exp.org}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {exp.tags.map((t) => (
+            <span key={t} className="font-mono text-[11px] px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[#D4D4D8]">
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {/* Screenshot stack that fans out on hover */}
+        <div className="group relative pt-2" style={{ perspective: 1000 }}>
+          {exp.images.map((src, i) => (
+            <div
+              key={src}
+              className={`rounded-xl overflow-hidden border border-[#a855f7]/25 bg-[#0D0D12] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                i === 0
+                  ? 'relative z-10 group-hover:[transform:rotateY(-6deg)_rotateX(3deg)]'
+                  : 'absolute top-2 left-0 right-0 z-0 [transform:translate(18px,18px)_rotate(3deg)] group-hover:[transform:translate(48px,36px)_rotate(6deg)] opacity-80'
+              }`}
+            >
+              <img
+                src={src}
+                alt={`${exp.org} screenshot ${i + 1}`}
+                className="w-full h-auto block"
+                draggable={false}
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Right: points on a scroll-driven progress rail */}
+      <ol ref={listRef} className="relative space-y-5 lg:pt-24">
+        <span className="absolute left-[15px] top-2 bottom-2 w-px bg-white/10" aria-hidden />
+        <motion.span
+          className="absolute left-[15px] top-2 bottom-2 w-px origin-top bg-gradient-to-b from-[#C084FC] via-[#a855f7] to-[#38BDF8] shadow-[0_0_10px_#a855f7]"
+          style={{ scaleY: rail }}
+          aria-hidden
+        />
+        {exp.points.map((point, pi) => (
+          <motion.li
+            key={pi}
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="group relative pl-12"
+          >
+            <span className="absolute left-0 top-4 w-[31px] h-[31px] rounded-full bg-[#07070B] border border-[#a855f7]/50 flex items-center justify-center font-mono text-[10px] text-[#C084FC] group-hover:bg-[#a855f7] group-hover:text-white transition-colors duration-300">
+              {String(pi + 1).padStart(2, '0')}
+            </span>
+            <div className="p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] group-hover:border-[#a855f7]/40 group-hover:bg-[#a855f7]/[0.06] transition-colors duration-500">
+              <p className="text-[15px] md:text-base text-[#D4D4D8] leading-relaxed font-inter">{point}</p>
+            </div>
+          </motion.li>
+        ))}
+      </ol>
+    </article>
+  );
+}
+
+function ScoreRing({ value, percent }: { value: string; percent: number }) {
+  const ref = useRef<SVGSVGElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const R = 44;
+  const C = 2 * Math.PI * R;
+
+  return (
+    <div className="relative w-28 h-28 shrink-0">
+      <svg ref={ref} viewBox="0 0 100 100" className="w-full h-full -rotate-90">
+        <defs>
+          <linearGradient id="score-ring" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#C084FC" />
+            <stop offset="100%" stopColor="#38BDF8" />
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r={R} fill="none" stroke="#1f1b2e" strokeWidth="6" />
+        <motion.circle
+          cx="50" cy="50" r={R} fill="none"
+          stroke="url(#score-ring)" strokeWidth="6" strokeLinecap="round"
+          strokeDasharray={C}
+          initial={{ strokeDashoffset: C }}
+          animate={{ strokeDashoffset: inView ? C * (1 - percent / 100) : C }}
+          transition={{ duration: 1.6, ease: EASE, delay: 0.2 }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center font-syne font-bold text-2xl text-white tracking-tight">
+        {value}
+      </div>
+    </div>
   );
 }
 
 export default function Experience() {
   const location = useLocation();
-  
-  // Ref and Scroll for Experience Line
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Ref and Scroll for Education Line
-  const containerRefEdu = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: scrollYProgressEdu } = useScroll({
-    target: containerRefEdu,
-    offset: ["start end", "end start"]
-  });
 
   // Smooth scroll to #education if present in hash on navigation
   useEffect(() => {
@@ -111,183 +218,97 @@ export default function Experience() {
   }, [location.hash]);
 
   return (
-    <section id="experience" className="relative py-32 px-6 overflow-hidden bg-[#050505]">
-      <div className="max-w-7xl mx-auto" ref={containerRef}>
-        
-        {/* Experience Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20 space-y-4"
+    <section id="experience" className="relative pt-40 pb-32 px-6 overflow-x-clip">
+      <div className="absolute inset-x-0 top-0 h-[60vh] bg-[radial-gradient(ellipse_at_70%_0%,rgba(124,58,237,0.2),transparent_60%)] pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: EASE, delay: 0.3 }}
+          className="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-end mb-28 md:mb-36"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
-            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">System // Execution Logs</span>
+          <div className="space-y-6">
+            <SectionLabel>System // Execution Logs</SectionLabel>
+            <h1 className="font-syne font-bold tracking-tighter leading-[0.85] text-7xl sm:text-8xl md:text-[9rem]">
+              Experience<span className="text-[#a855f7]">.</span>
+            </h1>
           </div>
-          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Experience</h2>
-        </motion.div>
+          <div className="space-y-8">
+            <p className="text-lg text-[#A1A1AA] font-inter leading-relaxed max-w-md">
+              Two internships, one in cloud security and one in utility-scale IT, alongside a Computer Science degree at LICET.
+            </p>
+            <dl className="grid grid-cols-3 gap-4 max-w-md">
+              {[
+                { k: 'Internships', v: '02' },
+                { k: 'CGPA', v: '8.9' },
+                { k: 'Graduating', v: '2028' },
+              ].map((s) => (
+                <div key={s.k} className="border-l border-[#a855f7]/40 pl-4">
+                  <dd className="font-syne font-bold text-3xl text-white tracking-tight">{s.v}</dd>
+                  <dt className="font-mono text-[10px] tracking-widest uppercase text-[#71717A] mt-1">{s.k}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </motion.header>
 
-        {/* Experience Timeline */}
-        <div className="relative z-10 space-y-16">
-          {/* Vertical Connecting Line */}
-          <motion.div 
-            className="absolute left-8 md:left-[3.75rem] top-4 bottom-4 w-px bg-gradient-to-b from-[#4F46E5] via-[#4F46E5]/20 to-transparent z-0 hidden md:block" 
-            style={{ scaleY: scrollYProgress, transformOrigin: 'top' }}
-          />
-
+        {/* Internships */}
+        <div className="space-y-32 md:space-y-44">
           {experiences.map((exp, i) => (
-            <motion.div
-              key={exp.org}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative pl-12 md:pl-32 group"
-            >
-              {/* Timeline Connector Dot / Glowing Node */}
-              <div className="absolute left-6 md:left-[3.5rem] top-12 flex items-center justify-center z-10">
-                <div className="w-4 h-4 bg-[#050505] border-2 border-[#38BDF8] rounded-full group-hover:scale-125 transition-transform duration-500 shadow-[0_0_12px_#38BDF8] flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
-                </div>
-                <div className="absolute w-6 h-6 rounded-full border border-[#4F46E5]/40 animate-ping opacity-70 pointer-events-none" />
-              </div>
-
-              <div className="p-1 bg-gradient-to-b from-[#27272A]/50 to-transparent rounded-lg overflow-hidden relative z-10">
-                <div className="bg-[#0A0A0E] p-10 rounded-[7px]">
-                  {/* Terminal Header */}
-                  <div className="flex items-center gap-2 mb-8 border-b border-[#27272A]/50 pb-4">
-                    <div className="w-2 h-2 rounded-full bg-[#EF4444]/40" />
-                    <div className="w-2 h-2 rounded-full bg-[#F59E0B]/40" />
-                    <div className="w-2 h-2 rounded-full bg-[#10B981]/40" />
-                    <div className="ml-4 font-mono text-[10px] text-[#71717A] tracking-widest uppercase">
-                      SESSION: {exp.session}
-                    </div>
-                  </div>
-
-                  <div className="grid md:grid-cols-[1fr_1.8fr] gap-12">
-                    <div className="space-y-6">
-                      <div className="space-y-4">
-                        <div className="inline-flex py-1 px-3 bg-[#4F46E5]/10 border border-[#4F46E5]/20 rounded-sm text-[#38BDF8] font-mono text-[10px] tracking-widest uppercase">
-                          {exp.period}
-                        </div>
-                        <h3 className="text-3xl font-syne font-bold text-white leading-tight">
-                          {exp.role}
-                        </h3>
-                        <div className="flex items-center gap-2 text-[#4F46E5] font-mono font-bold text-sm uppercase tracking-wider">
-                          <span className="text-[#71717A]">@</span> {exp.org}
-                        </div>
-                      </div>
-
-                      {/* Image container on the left column under the text layout */}
-                      {exp.images && exp.images.length > 0 && (
-                        <div className="flex flex-col gap-4 mt-6">
-                          {exp.images.map((imgSrc, imgIdx) => (
-                            <div key={imgIdx} className="rounded-md overflow-hidden border border-[#4F46E5]/20 bg-[#16161D]/50 shadow-sm max-w-full">
-                              <img
-                                  src={imgSrc}
-                                  alt={`${exp.org} Screenshot ${imgIdx + 1}`}
-                                  className="w-full h-auto max-w-full block object-cover"
-                                  draggable={false}
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="space-y-4">
-                      {exp.points.map((point, pi) => (
-                        <TerminalPoint key={pi} text={point} delay={0.2 + (pi * 0.1)} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Background Accent */}
-                <div className="absolute top-0 right-0 p-8 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity">
-                  <Briefcase className="w-48 h-48 text-white" />
-                </div>
-              </div>
-            </motion.div>
+            <ExperienceBlock key={exp.org} exp={exp} index={i} />
           ))}
         </div>
 
-        {/* Section Divider / Anchor */}
-        <div id="education" className="pt-24" />
+        {/* Education */}
+        <div id="education" className="pt-36 md:pt-44 scroll-mt-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: EASE }}
+            className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16"
+          >
+            <div className="space-y-5">
+              <SectionLabel>Academic // Educational History</SectionLabel>
+              <h2 className="font-syne font-bold tracking-tighter leading-[0.9] text-6xl md:text-8xl">
+                Education
+              </h2>
+            </div>
+            <GraduationCap className="hidden md:block w-14 h-14 text-[#a855f7]/40" aria-hidden />
+          </motion.div>
 
-        {/* Academic Timeline Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20 space-y-4"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
-            <span className="text-[#4F46E5] font-mono text-xs tracking-widest uppercase">Academic // Educational History</span>
+          <div className="relative grid md:grid-cols-3 gap-6">
+            {/* Connector line between the cards */}
+            <span className="hidden md:block absolute left-[8%] right-[8%] top-[4.5rem] h-px bg-gradient-to-r from-transparent via-[#a855f7]/40 to-transparent" aria-hidden />
+            {education.map((edu, i) => (
+              <motion.div
+                key={edu.school + '-' + edu.degree}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.9, delay: i * 0.12, ease: EASE }}
+                className="group relative flex flex-col gap-6 p-7 rounded-2xl border border-white/[0.07] bg-[#0D0D12]/80 backdrop-blur-md hover:border-[#a855f7]/40 transition-colors duration-500 overflow-hidden"
+              >
+                <span className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-[#a855f7]/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" aria-hidden />
+                <div className="relative flex items-center justify-between gap-4">
+                  <ScoreRing value={edu.stats.value} percent={scoreToPercent(edu.stats.value)} />
+                  <span className="font-mono text-[10px] tracking-widest uppercase text-[#71717A] text-right">
+                    {edu.stats.label}
+                  </span>
+                </div>
+                <div className="relative space-y-2">
+                  <h3 className="font-syne font-bold text-xl text-white leading-snug group-hover:text-[#C084FC] transition-colors">
+                    {edu.degree}
+                  </h3>
+                  <div className="text-sm text-[#A1A1AA] font-inter">{edu.school}</div>
+                  <div className="font-mono text-[11px] tracking-wider text-[#71717A]">{edu.detail}</div>
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <h2 className="text-6xl md:text-7xl font-syne font-bold tracking-tighter">Education</h2>
-        </motion.div>
-
-        {/* Academic Timeline */}
-        <div className="relative z-10 space-y-16" ref={containerRefEdu}>
-          {/* Vertical Connecting Line */}
-          <motion.div 
-            className="absolute left-8 md:left-[3.75rem] top-4 bottom-4 w-px bg-gradient-to-b from-[#4F46E5] via-[#4F46E5]/20 to-transparent z-0 hidden md:block" 
-            style={{ scaleY: scrollYProgressEdu, transformOrigin: 'top' }}
-          />
-
-          {education.map((edu, i) => (
-            <motion.div
-              key={edu.school + '-' + edu.degree}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="relative pl-12 md:pl-32 group"
-            >
-              {/* Connector Dot */}
-              <div className="absolute left-6 md:left-[3.5rem] top-1/2 -translate-y-1/2 flex items-center justify-center z-10">
-                <div className="w-4 h-4 bg-[#050505] border-2 border-[#38BDF8] rounded-full group-hover:scale-125 transition-transform duration-500 shadow-[0_0_12px_#38BDF8] flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full" />
-                </div>
-                <div className="absolute w-6 h-6 rounded-full border border-[#4F46E5]/40 animate-ping opacity-70 pointer-events-none" />
-              </div>
-
-              {/* Card */}
-              <div className="p-8 bg-[#0D0D12] border border-[#27272A]/50 rounded-lg hover:border-[#4F46E5]/40 transition-all duration-500 overflow-hidden relative cinematic-shadow">
-                <div className="relative z-10 grid md:grid-cols-[1fr_220px] gap-8 items-center">
-                  <div className="flex gap-6 items-start">
-                    <div className="p-3 bg-[#16161D] rounded border border-[#27272A] group-hover:border-[#4F46E5]/50 transition-colors shrink-0">
-                      <GraduationCap className="w-6 h-6 text-[#4F46E5]" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-syne font-bold text-white mb-2 group-hover:text-[#4F46E5] transition-colors">{edu.degree}</h3>
-                      <div className="text-[#A1A1AA] font-mono text-xs tracking-widest mb-2 font-bold">{edu.school}</div>
-                      <div className="text-[#71717A] text-xs font-mono">{edu.detail}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col md:items-end text-left md:text-right border-t md:border-t-0 md:border-l border-[#27272A] pt-6 md:pt-0 md:pl-8">
-                    <div className="text-5xl font-syne font-bold text-white tracking-tighter glow-text">
-                      {edu.stats.value}
-                      <span className="text-xl text-[#71717A] ml-2">{edu.stats.label}</span>
-                    </div>
-                    <div className="text-[10px] text-[#4F46E5] font-mono tracking-[0.2em] uppercase mt-2 font-bold">
-                      ACADEMIC_ACHIEVEMENT
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute top-0 right-0 w-32 h-full opacity-[0.03] pointer-events-none overflow-hidden">
-                  <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,white_10px,white_11px)]" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
         </div>
-
       </div>
     </section>
   );

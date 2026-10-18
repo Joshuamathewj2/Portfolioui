@@ -3,10 +3,7 @@
  *
  * To personalize this portfolio for Joshua:
  *
- * 1. PHOTO: Line ~99 - Replace the Unsplash URL with Joshua's actual photo
- *    - Upload photo to /src/imports/
- *    - Import it: import joshuaPhoto from '../../imports/your-photo.jpg'
- *    - Use it: <ImageWithFallback src={joshuaPhoto} ... />
+ * 1. PHOTO: change the `src` passed to <PhotoCard3D /> (files in /public, e.g. "/profilepic.png")
  *
  * 2. NAME & BIO: Lines ~67-89 - Update the text content
  *
@@ -15,10 +12,11 @@
  * 4. PROJECTS: Update Systems.tsx with actual project details
  */
 
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
-import { useEffect, useState } from 'react';
-import { ArrowRight, Code, Database, Brain, Globe, Shield, Github, Linkedin } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'motion/react';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router';
+import { ArrowRight, Github, Linkedin } from 'lucide-react';
+import PhotoCard3D from './PhotoCard3D';
 import TextScramble from './TextScramble';
 
 function MagneticButton({ children }: { children: React.ReactNode }) {
@@ -53,73 +51,100 @@ function MagneticButton({ children }: { children: React.ReactNode }) {
   );
 }
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const TAGLINE: { text: string; highlight?: boolean }[] = [
+  { text: 'I build' },
+  { text: 'AI agents', highlight: true },
+  { text: ', computer-vision tools and full-stack web apps.' },
+];
+
 export default function Hero() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springX = useSpring(mouseX, { damping: 50, stiffness: 400 });
-  const springY = useSpring(mouseY, { damping: 50, stiffness: 400 });
-
-  const rotateX = useTransform(springY, [-400, 400], [5, -5]);
-  const rotateY = useTransform(springX, [-400, 400], [-5, 5]);
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      mouseX.set(clientX - innerWidth / 2);
-      mouseY.set(clientY - innerHeight / 2);
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const navigate = useNavigate();
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
-    <section id="hero" className="relative min-h-[110vh] flex items-center pt-32 pb-20 overflow-hidden">
+    <section ref={sectionRef} id="hero" className="relative min-h-[100svh] md:min-h-[110vh] flex items-center pt-32 pb-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-[1.2fr_1fr] gap-16 items-center">
-        
+
         {/* Left: Content */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ y: contentY, opacity: contentOpacity }}
           className="relative z-20 space-y-10"
         >
           <div className="space-y-6">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-3 px-4 py-2 bg-[#4F46E5]/10 border border-[#4F46E5]/20 rounded-full text-[#38BDF8] font-mono text-xs tracking-widest uppercase"
+              transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
+              className="inline-flex items-center gap-3 px-4 py-2 bg-[#4F46E5]/10 border border-[#4F46E5]/20 rounded-full text-[#38BDF8] font-mono text-[11px] sm:text-xs tracking-widest uppercase backdrop-blur-md"
             >
-              <span className="w-1.5 h-1.5 bg-[#4F46E5] rounded-full animate-[pulse_2s_infinite]" />
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="absolute inset-0 rounded-full bg-[#10B981] animate-ping opacity-75" />
+                <span className="relative w-1.5 h-1.5 bg-[#10B981] rounded-full" />
+              </span>
               Engineering Status // Open to internships
             </motion.div>
 
-            <h1 className="text-7xl md:text-8xl font-syne font-bold leading-[0.9] tracking-tight">
-              <span className="hero-name-glow">
-                <TextScramble text="Joshua A" textClassName="hero-name-gradient" />
-              </span>
-              <span className="text-[#4F46E5]">.</span>
+            {/* Name rises out of a mask */}
+            <h1 className="text-[clamp(3rem,6.4vw,6.25rem)] font-syne font-bold leading-[0.9] tracking-tighter overflow-hidden pb-4 -mb-4">
+              <motion.span
+                className="inline-flex items-end"
+                initial={{ y: '110%' }}
+                animate={{ y: 0 }}
+                transition={{ duration: 1.2, delay: 0.6, ease: EASE }}
+              >
+                <span className="hero-name-glow">
+                  <TextScramble text="Joshua A" textClassName="hero-name-gradient" />
+                </span>
+                <span className="text-[#4F46E5]">.</span>
+              </motion.span>
             </h1>
 
             <p className="text-2xl md:text-3xl text-[#F5F5F5] font-syne font-medium max-w-xl leading-tight">
-              Specializing in <span className="text-white underline decoration-[#4F46E5]/40 underline-offset-8">Critical Systems Engineering</span>—bridging AI Forensics, Cybersecurity, and Scalable Infrastructure.
+              {TAGLINE.map((part, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ duration: 0.9, delay: 0.9 + i * 0.15, ease: EASE }}
+                  className={part.highlight
+                    ? 'inline text-white underline decoration-[#4F46E5]/60 underline-offset-8'
+                    : 'inline'}
+                >
+                  {part.text}{i === 0 ? ' ' : ''}
+                </motion.span>
+              ))}
             </p>
 
-            <p className="text-[#A1A1AA] text-lg max-w-2xl font-inter leading-relaxed">
-              Third-year Computer Science student at <span className="text-white font-medium">LICET</span>. Engineering high-reliability solutions for adversarial threat detection and automated operational pipelines.
-            </p>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 1.35, ease: EASE }}
+              className="text-[#A1A1AA] text-lg max-w-2xl font-inter leading-relaxed"
+            >
+              Third-year Computer Science student at <span className="text-white font-medium">LICET</span>, with internships in cloud security at SNS India and IT &amp; GIS infrastructure at TNEB. I work mostly in Python, TypeScript, React and FastAPI.
+            </motion.p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 1.5, ease: EASE }}
+            className="flex flex-wrap items-center gap-6"
+          >
             <MagneticButton>
               <button
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="group px-8 py-4 bg-white text-black rounded-sm font-inter text-sm font-bold flex items-center gap-3 hover:bg-[#4F46E5] hover:text-white transition-all duration-300"
+                onClick={() => navigate('/projects')}
+                className="group relative overflow-hidden px-8 py-4 bg-white text-black rounded-full font-inter text-sm font-bold flex items-center gap-3 transition-colors duration-500 hover:text-white"
               >
-                VIEW PROJECTS
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <span className="absolute inset-0 bg-[#4F46E5] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full" />
+                <span className="relative">VIEW PROJECTS</span>
+                <ArrowRight className="relative w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </MagneticButton>
 
@@ -128,7 +153,7 @@ export default function Hero() {
                 href="https://github.com/Joshuamathewj2"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 bg-[#0D0D12] border border-[#27272A] text-white rounded-sm hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all duration-300 group relative"
+                aria-label="GitHub" className="w-14 h-14 flex items-center justify-center bg-[#0D0D12]/70 backdrop-blur-md border border-[#27272A] text-white rounded-full hover:border-[#4F46E5] hover:text-[#818CF8] hover:-translate-y-0.5 transition-all duration-300 group relative"
               >
                 <Github className="w-5 h-5" />
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">GITHUB_PROFILE</div>
@@ -137,15 +162,15 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/joshua-learns"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-4 bg-[#0D0D12] border border-[#27272A] text-white rounded-sm hover:border-[#4F46E5] hover:text-[#4F46E5] transition-all duration-300 group relative"
+                aria-label="LinkedIn" className="w-14 h-14 flex items-center justify-center bg-[#0D0D12]/70 backdrop-blur-md border border-[#27272A] text-white rounded-full hover:border-[#4F46E5] hover:text-[#818CF8] hover:-translate-y-0.5 transition-all duration-300 group relative"
               >
                 <Linkedin className="w-5 h-5" />
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-[#4F46E5] text-white text-[10px] font-mono rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">LINKEDIN_CONNECT</div>
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pt-6 border-t border-[#27272A]/50">
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-x-3 gap-y-5 pt-6 border-t border-[#27272A]/50">
             {[
               { label: 'SYSTEMS', value: 'Backend' },
               { label: 'AI_PIPELINES', value: 'Integration' },
@@ -157,11 +182,11 @@ export default function Hero() {
                 key={stat.label}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 + (i * 0.1) }}
+                transition={{ delay: 1.7 + (i * 0.08), duration: 0.6 }}
                 className="space-y-1"
               >
-                <div className="text-[9px] text-[#4F46E5] font-mono tracking-tighter uppercase">{stat.label}</div>
-                <div className="text-[10px] text-white font-bold tracking-widest uppercase">
+                <div className="text-[10px] text-[#818CF8] font-mono tracking-tight uppercase">{stat.label}</div>
+                <div className="text-[11px] text-white font-bold tracking-normal uppercase">
                   {stat.value}
                 </div>
               </motion.div>
@@ -171,72 +196,32 @@ export default function Hero() {
 
         {/* Right: Portrait & Visuals */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.9, clipPath: 'inset(50% 0% 50% 0%)' }}
+          animate={{ opacity: 1, scale: 1, clipPath: 'inset(-50% -50% -50% -50%)' }}
+          transition={{ duration: 1.6, delay: 0.3, ease: EASE }}
           className="relative aspect-square md:h-[700px] flex items-center justify-center"
-          style={{ perspective: 1200 }}
+          style={{ y: portraitY }}
         >
-          {/* Asymmetrical Portrait Composition */}
-          <motion.div
-            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-            className="relative w-full h-full max-w-[480px] group"
-          >
-            {/* Seamless sci-fi edge masked portrait */}
-            <div className="absolute inset-0 z-10 overflow-hidden [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_100%)]">
-              <ImageWithFallback
-                src="/profilepic.png"
-                alt="Joshua A Portrait"
-                className="w-full h-full object-cover opacity-80 grayscale-[0.2] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
-              />
-              
-              {/* Edge Fade Blending */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#090a10] via-transparent to-transparent opacity-60" />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#090a10] via-transparent to-transparent opacity-40" />
-              
-              {/* Holographic Rim Lighting */}
-              <div className="absolute inset-0 shadow-[inset_0_0_80px_rgba(79,70,229,0.3)] pointer-events-none" />
-              
-              {/* Spatial UI Overlays */}
-              <div className="absolute bottom-6 left-6 flex gap-1 items-end pointer-events-none opacity-20 group-hover:opacity-60 transition-opacity">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ height: [4, 12, 4] }}
-                    transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
-                    className="w-1 bg-[#4F46E5]/40"
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Architecture Lines (Geometric Context) */}
-            <div className="absolute -inset-10 z-0 pointer-events-none border border-white/5 rounded-full opacity-20 group-hover:opacity-40 transition-opacity duration-1000" />
-            <div className="absolute -inset-20 z-0 pointer-events-none border border-white/5 rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-1000" />
-            
-            {/* Holographic Orbit Rings */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-              className="absolute -inset-6 z-20 pointer-events-none"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#38BDF8] rounded-full shadow-[0_0_15px_#38BDF8]" />
-            </motion.div>
-            
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-              className="absolute -inset-12 z-20 pointer-events-none"
-            >
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#4F46E5] rounded-full shadow-[0_0_10px_#4F46E5]" />
-            </motion.div>
-          </motion.div>
-
-          {/* Environmental Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-[#4F46E5]/10 via-transparent to-transparent blur-3xl pointer-events-none" />
+          <PhotoCard3D src="/profilepic.png" alt="Joshua A Portrait" />
         </motion.div>
 
       </div>
+
+      {/* Scroll cue */}
+      <motion.div
+        style={{ opacity: contentOpacity }}
+        className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex-col items-center gap-3 pointer-events-none"
+        aria-hidden
+      >
+        <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-[#71717A]">Scroll</span>
+        <span className="relative w-px h-14 bg-white/10 overflow-hidden">
+          <motion.span
+            className="absolute left-0 top-0 w-px h-1/2 bg-gradient-to-b from-transparent via-[#818CF8] to-transparent"
+            animate={{ y: ['-100%', '200%'] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </span>
+      </motion.div>
 
       {/* Background Decor */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">

@@ -1,7 +1,9 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { gsap } from 'gsap';
+import { Menu, X, Github, Linkedin } from 'lucide-react';
+import { lockScroll } from './SmoothScroll';
 
 interface NavItem {
   id: string;
@@ -11,6 +13,7 @@ interface NavItem {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,7 +41,26 @@ export default function Navbar() {
   if (activeIndex === -1 && currentPath !== '/') {
     activeIndex = navItems.findIndex(item => currentPath.startsWith(item.route));
   }
-  const effectiveActiveIndex = activeIndex === -1 ? 0 : activeIndex;
+  // -1 on the home route: no tab is highlighted.
+  const effectiveActiveIndex = activeIndex;
+
+  // Close the mobile menu whenever the route changes
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [currentPath]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    lockScroll(true);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      lockScroll(false);
+    };
+  }, [menuOpen]);
 
   // Refs for GSAP
   const navRef = useRef<HTMLDivElement>(null);
@@ -86,6 +108,10 @@ export default function Navbar() {
   // Synchronously position the active element on mount
   useLayoutEffect(() => {
     const activeButton = buttonRefs.current[effectiveActiveIndex];
+    if (activeElementRef.current && !activeButton) {
+      gsap.to(activeElementRef.current, { "--active-element-show": "0", duration: 0.2 });
+      return;
+    }
     if (navRef.current && activeElementRef.current && activeButton) {
       gsap.set(activeElementRef.current, {
         x: getOffsetLeft(activeButton),
@@ -108,6 +134,11 @@ export default function Navbar() {
     const fromIndex = prevActiveIndex.current;
     const toIndex = effectiveActiveIndex;
     prevActiveIndex.current = toIndex;
+
+    // Arriving from or leaving the home route: the layout effect above handles show/hide.
+    if (fromIndex === -1 || toIndex === -1) {
+      return;
+    }
 
     const navElement = navRef.current;
     const activeElement = activeElementRef.current;
@@ -341,17 +372,92 @@ export default function Navbar() {
             </nav>
           </div>
 
-          <Link to="/connect" className="no-underline">
-            <motion.button
-              className="font-mono text-[10px] tracking-widest px-5 py-2 border border-[#4F46E5]/30 text-[#F5F5F5] uppercase hover:bg-[#4F46E5] hover:border-[#4F46E5] transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <div className="flex items-center gap-3">
+            <Link to="/connect" className="no-underline hidden sm:block">
+              <motion.span
+                className="relative inline-flex items-center gap-2 font-mono text-[10px] tracking-widest px-5 py-2.5 rounded-full border border-[#4F46E5]/40 text-[#F5F5F5] uppercase hover:bg-[#4F46E5] hover:border-[#4F46E5] hover:shadow-[0_0_24px_rgba(79,70,229,0.5)] transition-all duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] shadow-[0_0_6px_#10B981]" />
+                Initialize Sync
+              </motion.span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              className="md:hidden relative z-[56] w-11 h-11 rounded-full border border-white/10 bg-[#0D0D12]/70 backdrop-blur-md flex items-center justify-center text-white"
             >
-              Initialize Sync
-            </motion.button>
-          </Link>
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
       </motion.nav>
+
+      {/* Mobile full-screen menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
+            animate={{ clipPath: 'circle(150% at calc(100% - 44px) 44px)' }}
+            exit={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            className="md:hidden fixed inset-0 z-[49] bg-[#07070B] flex flex-col justify-between px-6 pt-28 pb-10"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_0%,rgba(79,70,229,0.25),transparent_60%)] pointer-events-none" />
+            <ul className="relative space-y-2">
+              {[{ id: 'home', label: 'Home', route: '/' }, ...navItems].map((item, i) => {
+                const active = currentPath === item.route;
+                return (
+                  <motion.li
+                    key={item.id}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + i * 0.05, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <Link
+                      to={item.route}
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-baseline gap-4 no-underline py-1"
+                    >
+                      <span className="font-mono text-xs text-[#71717A] w-6">{String(i).padStart(2, '0')}</span>
+                      <span className={`font-syne font-bold text-5xl tracking-tighter ${active ? 'text-white' : 'text-[#52525B]'}`}>
+                        {item.label}
+                        {active && <span className="text-[#4F46E5]">.</span>}
+                      </span>
+                    </Link>
+                  </motion.li>
+                );
+              })}
+            </ul>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="relative flex items-center justify-between border-t border-[#27272A] pt-6"
+            >
+              <a href="mailto:joshuamathewj2@gmail.com" className="font-mono text-xs text-[#A1A1AA]">
+                joshuamathewj2@gmail.com
+              </a>
+              <div className="flex gap-3">
+                <a href="https://github.com/Joshuamathewj2" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-[#A1A1AA]">
+                  <Github className="w-5 h-5" />
+                </a>
+                <a href="https://www.linkedin.com/in/joshua-learns" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-[#A1A1AA]">
+                  <Linkedin className="w-5 h-5" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

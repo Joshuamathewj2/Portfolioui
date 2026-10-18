@@ -4,6 +4,26 @@ import { useState } from 'react';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sent, setSent] = useState(false);
+
+  // No backend: hand the message to the visitor's mail client, pre-filled.
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const subject = `Portfolio enquiry from ${form.name}`;
+    const body = `${form.message}
+
+— ${form.name}
+${form.email}`;
+    window.location.href = `mailto:joshuamathewj2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
+  const update = (field: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setForm((f) => ({ ...f, [field]: e.target.value }));
+      setSent(false);
+    };
 
   const copyEmail = () => {
     navigator.clipboard.writeText('joshuamathewj2@gmail.com');
@@ -95,39 +115,55 @@ export default function Contact() {
             viewport={{ once: true }}
             className="p-10 bg-[#0D0D12] border border-[#27272A] rounded-2xl relative"
           >
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono text-[#71717A] uppercase tracking-widest ml-1">Protocol // Name</label>
+                  <label htmlFor="contact-name" className="text-[10px] font-mono text-[#71717A] uppercase tracking-widest ml-1">Protocol // Name</label>
                   <input 
+                    id="contact-name"
                     type="text" 
+                    required
+                    value={form.name}
+                    onChange={update('name')}
                     placeholder="Identify yourself..."
-                    className="w-full bg-[#050505] border border-[#27272A] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#4F46E5] transition-colors"
+                    className="w-full bg-[#050505] border border-[#27272A] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#4F46E5] focus:shadow-[0_0_0_4px_rgba(79,70,229,0.15)] placeholder:text-[#3F3F46] transition-all"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-[10px] font-mono text-[#71717A] uppercase tracking-widest ml-1">Endpoint // Email</label>
+                  <label htmlFor="contact-email" className="text-[10px] font-mono text-[#71717A] uppercase tracking-widest ml-1">Endpoint // Email</label>
                   <input 
+                    id="contact-email"
                     type="email" 
+                    required
+                    value={form.email}
+                    onChange={update('email')}
                     placeholder="your@email.com"
-                    className="w-full bg-[#050505] border border-[#27272A] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#4F46E5] transition-colors"
+                    className="w-full bg-[#050505] border border-[#27272A] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#4F46E5] focus:shadow-[0_0_0_4px_rgba(79,70,229,0.15)] placeholder:text-[#3F3F46] transition-all"
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-mono text-[#71717A] uppercase tracking-widest ml-1">Payload // Message</label>
+                <label htmlFor="contact-message" className="text-[10px] font-mono text-[#71717A] uppercase tracking-widest ml-1">Payload // Message</label>
                 <textarea 
+                  id="contact-message"
+                  required
+                  value={form.message}
+                  onChange={update('message')}
                   placeholder="How can we build together?"
                   rows={6}
-                  className="w-full bg-[#050505] border border-[#27272A] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#4F46E5] transition-colors resize-none"
+                  className="w-full bg-[#050505] border border-[#27272A] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#4F46E5] focus:shadow-[0_0_0_4px_rgba(79,70,229,0.15)] placeholder:text-[#3F3F46] transition-all resize-none"
                 />
               </div>
               <button 
                 type="submit"
-                className="w-full py-4 bg-white text-black font-bold uppercase tracking-widest text-xs hover:bg-[#4F46E5] hover:text-white transition-all duration-300 rounded-sm"
+                className="group relative overflow-hidden w-full py-4 bg-white text-black font-bold uppercase tracking-widest text-xs hover:text-white transition-colors duration-500 rounded-full"
               >
-                EXECUTE_MESSAGE_SEND
+                <span className="absolute inset-0 bg-[#4F46E5] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                <span className="relative">EXECUTE_MESSAGE_SEND</span>
               </button>
+              <p aria-live="polite" className="min-h-[1rem] text-center font-mono text-[10px] tracking-widest uppercase text-[#10B981]">
+                {sent ? 'Mail client opened // message drafted' : ''}
+              </p>
             </form>
           </motion.div>
         </div>

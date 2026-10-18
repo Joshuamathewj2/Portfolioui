@@ -5,6 +5,8 @@ export default function CursorGlow() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
   const [isHovering, setIsHovering] = useState(false);
+  // Touch screens have no hover cursor to follow
+  const [hasPointer] = useState(() => window.matchMedia('(hover: hover) and (pointer: fine)').matches);
 
   // Soft delayed movement for cinematic feel
   const springConfig = { damping: 40, stiffness: 450, mass: 0.5 };
@@ -29,6 +31,8 @@ export default function CursorGlow() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
+
+  if (!hasPointer) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden">

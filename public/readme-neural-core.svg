@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050507"/>
+      <stop offset="50%" stop-color="#0A0A12"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </linearGradient>
+
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.45"/>
+      <stop offset="55%" stop-color="#4F46E5" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#050507" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="purpleCyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C084FC"/>
+      <stop offset="50%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E0E18"/>
+      <stop offset="100%" stop-color="#08080D"/>
+    </linearGradient>
+
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#a855f7" stroke-width="0.6" stroke-opacity="0.1"/>
+    </pattern>
+
+    <!-- Paths from Center Core (450, 180) to 4 Orbital Nodes -->
+    <path id="pathTL" d="M 450 180 C 350 180, 330 85, 245 85" fill="none"/>
+    <path id="pathBL" d="M 450 180 C 350 180, 330 275, 245 275" fill="none"/>
+    <path id="pathTR" d="M 450 180 C 550 180, 570 85, 655 85" fill="none"/>
+    <path id="pathBR" d="M 450 180 C 550 180, 570 275, 655 275" fill="none"/>
+  </defs>
+
+  <style>
+    .title { font: 800 13px 'JetBrains Mono', Consolas, monospace; fill: #F5F5F5; letter-spacing: 2px; }
+    .sub { font: 500 10px 'JetBrains Mono', Consolas, monospace; fill: #A1A1AA; letter-spacing: 1px; }
+    .tag { font: 700 9px 'JetBrains Mono', Consolas, monospace; fill: #C084FC; letter-spacing: 1.5px; }
+    .core-text { font: 900 22px 'Arial Black', sans-serif; fill: #FFFFFF; letter-spacing: 1px; }
+    .core-sub { font: 600 8px 'JetBrains Mono', Consolas, monospace; fill: #38BDF8; letter-spacing: 2.5px; }
+    .dash-flow {
+      stroke-dasharray: 8 14;
+      animation: dashMove 2.2s linear infinite;
+    }
+    .card-box {
+      stroke: #27272A;
+      stroke-width: 1.2;
+      animation: borderPulse 4s ease-in-out infinite;
+    }
+    @keyframes dashMove {
+      to { stroke-dashoffset: -44; }
+    }
+    @keyframes borderPulse {
+      0%, 100% { stroke: #3b2d64; }
+      50% { stroke: #a855f7; }
+    }
+  </style>
+
+  <!-- Background & Perspective Grid -->
+  <rect width="900" height="360" rx="18" fill="url(#bgGrad)" stroke="#27272A" stroke-width="1.5"/>
+  <rect width="900" height="360" rx="18" fill="url(#grid)"/>
+  <circle cx="450" cy="180" r="200" fill="url(#coreGlow)"/>
+
+  <!-- HUD Corner Brackets -->
+  <g stroke="#a855f7" stroke-width="1.5" stroke-opacity="0.6" fill="none">
+    <path d="M 18 38 L 18 18 L 38 18"/>
+    <path d="M 862 18 L 882 18 L 882 38"/>
+    <path d="M 18 322 L 18 342 L 38 342"/>
+    <path d="M 862 342 L 882 342 L 882 322"/>
+  </g>
+
+  <!-- Top & Bottom HUD Telemetry Labels -->
+  <text x="32" y="32" class="tag" opacity="0.8">// NEURAL ARCHITECTURE // LIVE_SYNC</text>
+  <g transform="translate(755, 22)">
+    <circle cx="6" cy="6" r="4" fill="#10B981">
+      <animate attributeName="opacity" values="1;0.2;1" dur="1.6s" repeatCount="indefinite"/>
+    </circle>
+    <text x="16" y="10" class="tag" style="fill:#10B981;">SYS_ONLINE</text>
+  </g>
+
+  <!-- Connecting Neural Nerves (Base Glow + Animated Dash + Flowing Particles) -->
+  <g filter="url(#glow)">
+    <use href="#pathTL" stroke="#4F46E5" stroke-width="2" stroke-opacity="0.35"/>
+    <use href="#pathBL" stroke="#4F46E5" stroke-width="2" stroke-opacity="0.35"/>
+    <use href="#pathTR" stroke="#4F46E5" stroke-width="2" stroke-opacity="0.35"/>
+    <use href="#pathBR" stroke="#4F46E5" stroke-width="2" stroke-opacity="0.35"/>
+
+    <use href="#pathTL" stroke="#a855f7" stroke-width="2" class="dash-flow"/>
+    <use href="#pathBL" stroke="#38BDF8" stroke-width="2" class="dash-flow"/>
+    <use href="#pathTR" stroke="#38BDF8" stroke-width="2" class="dash-flow"/>
+    <use href="#pathBR" stroke="#a855f7" stroke-width="2" class="dash-flow"/>
+  </g>
+
+  <!-- Moving Data Packets -->
+  <circle r="4.5" fill="#C084FC" filter="url(#Glow)">
+    <animateMotion dur="2.1s" repeatCount="indefinite"><mpath href="#pathTL"/></animateMotion>
+  </circle>
+  <circle r="4.5" fill="#38BDF8" filter="url(#Glow)">
+    <animateMotion dur="2.5s" begin="0.5s" repeatCount="indefinite"><mpath href="#pathBL"/></animateMotion>
+  </circle>
+  <circle r="4.5" fill="#38BDF8" filter="url(#Glow)">
+    <animateMotion dur="2.3s" begin="0.2s" repeatCount="indefinite"><mpath href="#pathTR"/></animateMotion>
+  </circle>
+  <circle r="4.5" fill="#C084FC" filter="url(#Glow)">
+    <animateMotion dur="1.9s" begin="0.8s" repeatCount="indefinite"><mpath href="#pathBR"/></animateMotion>
+  </circle>
+
+  <!-- ═══ NODE 01: TOP LEFT (AI AGENTS) ═══ -->
+  <g transform="translate(35, 38)">
+    <rect width="210" height="94" rx="12" fill="url(#cardGrad)" class="card-box"/>
+    <rect x="0" y="0" width="4" height="94" rx="2" fill="#a855f7"/>
+    <text x="18" y="24" class="tag">NODE_01 // AUTONOMOUS</text>
+    <text x="18" y="47" class="title">AI AGENTS &amp; LLMs</text>
+    <text x="18" y="68" class="sub">LangGraph · Gemini · RAG</text>
+    <text x="18" y="82" class="sub" style="fill:#38BDF8;">Multi-Agent Pipelines</text>
+    <circle cx="190" cy="20" r="4" fill="#a855f7">
+      <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ═══ NODE 02: BOTTOM LEFT (COMPUTER VISION) ═══ -->
+  <g transform="translate(35, 228)">
+    <rect width="210" height="94" rx="12" fill="url(#cardGrad)" class="card-box"/>
+    <rect x="0" y="0" width="4" height="94" rx="2" fill="#38BDF8"/>
+    <text x="18" y="24" class="tag" style="fill:#38BDF8;">NODE_02 // SPATIAL VISION</text>
+    <text x="18" y="47" class="title">COMPUTER VISION</text>
+    <text x="18" y="68" class="sub">OpenCV · MediaPipe · CNN</text>
+    <text x="18" y="82" class="sub" style="fill:#C084FC;">3D Hand Tracking &amp; FFT</text>
+    <circle cx="190" cy="20" r="4" fill="#38BDF8">
+      <animate attributeName="r" values="3;6;3" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ═══ NODE 03: TOP RIGHT (FULL-STACK WEB) ═══ -->
+  <g transform="translate(655, 38)">
+    <rect width="210" height="94" rx="12" fill="url(#cardGrad)" class="card-box"/>
+    <rect x="206" y="0" width="4" height="94" rx="2" fill="#38BDF8"/>
+    <text x="18" y="24" class="tag" style="fill:#38BDF8;">NODE_03 // ARCHITECTURE</text>
+    <text x="18" y="47" class="title">FULL-STACK SYSTEMS</text>
+    <text x="18" y="68" class="sub">React 19 · Next.js · FastAPI</text>
+    <text x="18" y="82" class="sub" style="fill:#C084FC;">PostgreSQL · Redis · n8n</text>
+    <circle cx="190" cy="20" r="4" fill="#38BDF8">
+      <animate attributeName="r" values="3;6;3" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ═══ NODE 04: BOTTOM RIGHT (3D & MOTION UI) ═══ -->
+  <g transform="translate(655, 228)">
+    <rect width="210" height="94" rx="12" fill="url(#cardGrad)" class="card-box"/>
+    <rect x="206" y="0" width="4" height="94" rx="2" fill="#a855f7"/>
+    <text x="18" y="24" class="tag">NODE_04 // CREATIVE ENGINE</text>
+    <text x="18" y="47" class="title">3D &amp; MOTION UI</text>
+    <text x="18" y="68" class="sub">Three.js · R3F · WebGL</text>
+    <text x="18" y="82" class="sub" style="fill:#38BDF8;">GSAP · Framer Motion</text>
+    <circle cx="190" cy="20" r="4" fill="#a855f7">
+      <animate attributeName="r" values="3;6;3" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.3;1" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ═══ CENTER CORE REACTOR (450, 180) ═══ -->
+  <g transform="translate(450, 180)">
+    <!-- Outer Rotating Dashed Ring -->
+    <circle r="92" fill="none" stroke="#4F46E5" stroke-width="1.2" stroke-dasharray="6 10" opacity="0.7">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="22s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Counter-Rotating Neon Arc Ring -->
+    <circle r="78" fill="none" stroke="url(#purpleCyan)" stroke-width="2.5" stroke-dasharray="48 90 20 80" stroke-linecap="round" filter="url(#glow)">
+      <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="8s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Pulsing Energy Halo -->
+    <circle r="62" fill="#090910" stroke="#a855f7" stroke-width="2" filter="url(#strongGlow)">
+      <animate attributeName="r" values="60;65;60" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Inner Core Face -->
+    <circle r="58" fill="#07070C" stroke="#C084FC" stroke-width="1" stroke-opacity="0.5"/>
+    <text x="0" y="2" text-anchor="middle" class="core-text">JA<tspan fill="#a855f7">.</tspan></text>
+    <text x="0" y="22" text-anchor="middle" class="core-sub">CORE_SYNC</text>
+  </g>
+</svg>

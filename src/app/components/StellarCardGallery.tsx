@@ -8,7 +8,7 @@ import {
   Plane,
   Sphere,
 } from "@react-three/drei";
-import type { GalleryItem } from "./Systems";
+import type { GalleryItem } from "../data/projects";
 
 /* =========================
    Types

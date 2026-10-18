@@ -68,7 +68,7 @@ export default function TextScramble({ text, className = "", textClassName = "" 
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <span className={`relative ${textClassName}`}>
+      <span className={`relative whitespace-nowrap ${textClassName}`}>
         {displayText.split("").map((char, i) => (
           <span
             key={i}
@@ -79,7 +79,8 @@ export default function TextScramble({ text, className = "", textClassName = "" 
               transitionDelay: `${i * 10}ms`,
             }}
           >
-            {char}
+            {/* inline-block collapses a plain space, so keep word gaps with a non-breaking one */}
+            {char === " " ? " " : char}
           </span>
         ))}
       </span>
